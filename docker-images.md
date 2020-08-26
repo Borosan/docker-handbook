@@ -459,16 +459,7 @@ If we want to load that Docker container from the archived tar file in the futur
 Loaded image: myapp:original
 ```
 
-### Importing and exporting images
 
-
-
-{% hint style="info" %}
-#### Difference between loading a saved image and importing an exported container as an image
-
-Loading an image using the `load` command creates a new image including its history.  
-Importing a container as an image using the `import` command creates a new image excluding the history which results in a smaller image size compared to loading an image.
-{% endhint %}
 
 
 
