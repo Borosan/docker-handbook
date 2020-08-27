@@ -41,6 +41,20 @@
 * [`docker cp`](https://docs.docker.com/engine/reference/commandline/cp) copies files or folders between a container and the local filesystem.
 * [`docker export`](https://docs.docker.com/engine/reference/commandline/export) turns container filesystem into tarball archive stream to STDOUT.
 
+#### Import/Export container
+
+Import a container as an image from file:
+
+```text
+cat my_container.tar.gz | docker import - my_image:my_tag
+```
+
+Export an existing container:
+
+```text
+docker export my_container | gzip > my_container.tar.gz
+```
+
 #### Executing Commands
 
 * [`docker exec`](https://docs.docker.com/engine/reference/commandline/exec) to execute a command in container.
@@ -74,20 +88,6 @@ Save an existing image:
 
 ```text
 docker save my_image:my_tag | gzip > my_image.tar.gz
-```
-
-#### Import/Export container
-
-Import a container as an image from file:
-
-```text
-cat my_container.tar.gz | docker import - my_image:my_tag
-```
-
-Export an existing container:
-
-```text
-docker export my_container | gzip > my_container.tar.gz
 ```
 
 ### Dockerfile
