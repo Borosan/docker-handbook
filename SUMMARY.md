@@ -10,4 +10,5 @@
 * [Docker Security](docker-security.md)
 * [Docker Compose](docker-compose.md)
 * [Docker cheat sheet](docker-cheat-sheet.md)
+* [Docker Compose cheat sheet](docker-compose-cheat-sheet.md)
 
