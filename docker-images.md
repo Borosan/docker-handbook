@@ -452,13 +452,6 @@ myapp           myapp:final     myapp:original
 Dockerfile  myapp-original.tar
 ```
 
-{% hint style="info" %}
-Docker supports two different types of methods for saving container images to a single tarball:
-
-* `docker save` - saves a non-running container _image_ to a file
-* `docker export` - saves a container’s running or paused _instance_ to a file
-{% endhint %}
-
 If we want to load that Docker container from the archived tar file in the future, we can use the docker load command:
 
 ```text
@@ -466,12 +459,7 @@ If we want to load that Docker container from the archived tar file in the futur
 Loaded image: myapp:original
 ```
 
-{% hint style="info" %}
-#### Difference between loading a saved image and importing an exported container as an image
 
-Loading an image using the `load` command creates a new image including its history.  
-Importing a container as an image using the `import` command creates a new image excluding the history which results in a smaller image size compared to loading an image.
-{% endhint %}
 
 
 
@@ -498,12 +486,6 @@ Importing a container as an image using the `import` command creates a new image
 [https://docs.docker.com/engine/reference/commandline/search/](https://docs.docker.com/engine/reference/commandline/search/)
 
 [https://ropenscilabs.github.io/r-docker-tutorial/04-Dockerhub.html](https://ropenscilabs.github.io/r-docker-tutorial/04-Dockerhub.html)
-
-[https://tecadmin.net/export-and-import-docker-containers/](https://tecadmin.net/export-and-import-docker-containers/)
-
-[https://www.giantswarm.io/blog/moving-docker-container-images-around\#:~:text=Export%20vs.&text=Docker%20supports%20two%20different%20types,container%20image%20to%20a%20file](https://www.giantswarm.io/blog/moving-docker-container-images-around#:~:text=Export%20vs.&text=Docker%20supports%20two%20different%20types,container%20image%20to%20a%20file)
-
-[https://github.com/wsargent/docker-cheat-sheet](https://github.com/wsargent/docker-cheat-sheet)
 
 .
 

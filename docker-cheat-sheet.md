@@ -1,12 +1,12 @@
 # Docker cheat sheet
 
-## Check Version
+### Check Version
 
 *  [`docker version`](https://docs.docker.com/engine/reference/commandline/version/) shows which version of docker you have running.
 
-## Containers
+### Containers
 
-### Lifecycle
+#### Lifecycle
 
 * [`docker create`](https://docs.docker.com/engine/reference/commandline/create) creates a container but does not start it.
 * [`docker rename`](https://docs.docker.com/engine/reference/commandline/rename/) allows the container to be renamed.
@@ -14,7 +14,7 @@
 * [`docker rm`](https://docs.docker.com/engine/reference/commandline/rm) deletes a container.
 * [`docker update`](https://docs.docker.com/engine/reference/commandline/update/) updates a container's resource limits.
 
-### Starting and Stopping
+#### Starting and Stopping
 
 * [`docker start`](https://docs.docker.com/engine/reference/commandline/start) starts a container so it is running.
 * [`docker stop`](https://docs.docker.com/engine/reference/commandline/stop) stops a running container.
@@ -25,7 +25,7 @@
 * [`docker kill`](https://docs.docker.com/engine/reference/commandline/kill) sends a SIGKILL to a running container.
 * [`docker attach`](https://docs.docker.com/engine/reference/commandline/attach) will connect to a running container.
 
-### Info
+#### Info
 
 * [`docker ps`](https://docs.docker.com/engine/reference/commandline/ps) shows running containers.
 * [`docker logs`](https://docs.docker.com/engine/reference/commandline/logs) gets logs from container.
@@ -36,18 +36,18 @@
 * [`docker stats`](https://docs.docker.com/engine/reference/commandline/stats) shows containers' resource usage statistics.
 * [`docker diff`](https://docs.docker.com/engine/reference/commandline/diff) shows changed files in the container's FS.
 
-### Import / Export
+#### Import / Export
 
 * [`docker cp`](https://docs.docker.com/engine/reference/commandline/cp) copies files or folders between a container and the local filesystem.
 * [`docker export`](https://docs.docker.com/engine/reference/commandline/export) turns container filesystem into tarball archive stream to STDOUT.
 
-### Executing Commands
+#### Executing Commands
 
 * [`docker exec`](https://docs.docker.com/engine/reference/commandline/exec) to execute a command in container.
 
-## Images
+### Images
 
-### Lifecycle
+#### Lifecycle
 
 * [`docker images`](https://docs.docker.com/engine/reference/commandline/images) shows all images.
 * [`docker import`](https://docs.docker.com/engine/reference/commandline/import) creates an image from a tarball.
@@ -57,12 +57,12 @@
 * [`docker load`](https://docs.docker.com/engine/reference/commandline/load) loads an image from a tar archive as STDIN, including images and tags \(as of 0.7\).
 * [`docker save`](https://docs.docker.com/engine/reference/commandline/save) saves an image to a tar archive stream to STDOUT with all parent layers, tags & versions \(as of 0.7\).
 
-### Info
+#### Info
 
 * [`docker history`](https://docs.docker.com/engine/reference/commandline/history) shows history of image.
 * [`docker tag`](https://docs.docker.com/engine/reference/commandline/tag) tags an image to a name \(local or registry\).
 
-### Load/Save image
+#### Load/Save image
 
 Load an image from file:
 
@@ -76,7 +76,7 @@ Save an existing image:
 docker save my_image:my_tag | gzip > my_image.tar.gz
 ```
 
-### Import/Export container
+#### Import/Export container
 
 Import a container as an image from file:
 
@@ -90,9 +90,9 @@ Export an existing container:
 docker export my_container | gzip > my_container.tar.gz
 ```
 
-## Dockerfile
+### Dockerfile
 
-### Instructions
+#### Instructions
 
 * [.dockerignore](https://docs.docker.com/engine/reference/builder/#dockerignore-file)
 * [FROM](https://docs.docker.com/engine/reference/builder/#from) Sets the Base Image for subsequent instructions.
@@ -114,7 +114,7 @@ docker export my_container | gzip > my_container.tar.gz
 * [SHELL](https://docs.docker.com/engine/reference/builder/#shell) override default shell is used by docker to run commands.
 * [HEALTHCHECK](https://docs.docker.com/engine/reference/builder/#healthcheck) tells docker how to test a container to check that it is still working.
 
-## Registry & Repository
+### Registry & Repository
 
 * [`docker login`](https://docs.docker.com/engine/reference/commandline/login) to login to a registry.
 * [`docker logout`](https://docs.docker.com/engine/reference/commandline/logout) to logout from a registry.
@@ -122,7 +122,7 @@ docker export my_container | gzip > my_container.tar.gz
 * [`docker pull`](https://docs.docker.com/engine/reference/commandline/pull) pulls an image from registry to local machine.
 * [`docker push`](https://docs.docker.com/engine/reference/commandline/push) pushes an image to the registry from local machine.
 
-## Volumes
+### Volumes
 
 #### Lifecycle
 
