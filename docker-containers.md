@@ -317,15 +317,23 @@ for example our redis container id is `970f1a18714a ,` in order to access the lo
 
 This is just a portion from the log output. We can get the logs in real-time by using the `-f` or `--follow` option and Any later log will show up instantly in the terminal. We can exit by pressing `ctrl+c` key combination or simply closing the window. The container will keep running even if you exit out of the log window.
 
+### Importing and exporting Containers
 
+For ease of transport, we'll be exporting the containers into a gzipped file. The command to export the containers is:
 
+```text
+docker export <ContainerName> | gzip > NAME.gz
+```
 
+In similar fashion to the export, we're going to import the container with a single command. Obviously, before you do this, you must first move the exported file to the new server. the import can be handled with the following command:
 
-### 
+```text
+zcat NAME.gz | docker import - NAME
+```
 
+okey lets go to the next section!
 
-
-
+.
 
 --------------------
 

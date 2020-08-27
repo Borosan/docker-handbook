@@ -143,7 +143,9 @@ When you are working with Docker, you use images, containers, volumes, networks;
 
 Don't worry if it looks confusing at the moment. Everything will become much clearer in the upcoming sub-sections.
 
-------------------------------------------------------------------------------------
+.
+
+--------
 
 [https://www.freecodecamp.org/news/the-docker-handbook/](https://www.freecodecamp.org/news/the-docker-handbook/) by [Farhan Hasin Chowdhury](https://www.freecodecamp.org/news/author/farhanhasin/)
 

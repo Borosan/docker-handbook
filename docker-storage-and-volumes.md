@@ -144,7 +144,13 @@ $ docker container rm devtest
 $ docker volume rm myvol2
 ```
 
-## Use bind  mounts
+{% hint style="danger" %}
+The `docker export` command does not export the contents of volumes associated with the container. If a volume is mounted on top of an existing directory in the container, `docker export` will export the contents of the _underlying_ directory, not the contents of the volume.
+
+Refer to [Backup, restore, or migrate data volumes](https://docs.docker.com/v17.03/engine/tutorials/dockervolumes/#backup-restore-or-migrate-data-volumes) in the user guide for examples on exporting data in a volume.
+{% endhint %}
+
+### Use bind  mounts
 
 Bind mounts have been around since the early days of Docker. Bind mounts have limited functionality compared to volumes. When you use a bind mount, a file or directory on the host machine is mounted into a container. The file or directory is referenced by its full or relative path on the host machine. By contrast, when you use a volume, a new directory is created within Docker’s storage directory on the host machine, and Docker manages that directory’s contents.
 
@@ -195,7 +201,9 @@ Because the `-v` and `--volume` flags have been a part of Docker for a long time
 * If you use `--mount` to bind-mount a file or directory that does not yet exist on the Docker host, Docker does **not** automatically create it for you, but generates an error.
 {% endhint %}
 
----------
+.
+
+------
 
 with the special thanks of David Davis .
 

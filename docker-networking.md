@@ -394,7 +394,9 @@ and actually there are not private to public port mapping, it is directly on the
 
 ![](.gitbook/assets/network-host-nginx.jpg)
 
+.
 
+.
 
 _--------_
 

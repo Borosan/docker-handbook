@@ -106,15 +106,11 @@ By default, Docker starts containers with a restricted set of capabilities. What
 
  Typically, servers run several processes as root by default, including the _SSH daemon, cron daemon, logging daemons, kernel modules, network configuration tools_, etc. However, a container works differently, with restricted root privilege, as almost all the important tasks will be handled by the infrastructure around. This restricted root access in containers reduces the vectors of attack by malicious users, considerably.
 
+.
 
+.
 
-
-
-
-
-
-
-
+.
 
 -----
 
