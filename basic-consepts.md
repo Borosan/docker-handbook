@@ -393,6 +393,12 @@ Don't worry if it looks confusing at the moment. Everything will become much cle
 
 [https://docs.docker.com/get-started/overview/](https://docs.docker.com/get-started/overview/)
 
+[https://docs.docker.com/engine/install/fedora/](https://docs.docker.com/engine/install/fedora/)
+
+[https://docs.docker.com/engine/install/centos/](https://docs.docker.com/engine/install/centos/)
+
+[https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/)
+
 [https://wiki.aquasec.com/display/containers/Docker+Containers+vs.+Virtual+Machines](https://wiki.aquasec.com/display/containers/Docker+Containers+vs.+Virtual+Machines)
 
 [https://docs.docker.com/get-started/overview/\#:~:text=These%20namespaces%20provide%20a%20layer,\(PID%3A%20Process%20ID\).](https://docs.docker.com/get-started/overview/#:~:text=These%20namespaces%20provide%20a%20layer,%28PID%3A%20Process%20ID%29.)
