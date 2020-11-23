@@ -84,7 +84,14 @@ RUN apt-get update && apt-get install -y nginx openssh-server
 * **VOLUME**: creates a mount point as defined when the container is run.
 * **ENTRYPOINT**: the executable runs when the container is run.
 * **EXPOSE**: documents the ports that should be published.
-* **CMD**: provides arguments for the encryption \(only one is allowed\)
+* The **CMD** instruction has three forms:
+
+  * **`CMD ["executable","param1","param2"]`** \(_exec_ form, this is the preferred form\)
+  * **`CMD ["param1","param2"]`** \(as _default parameters to ENTRYPOINT_\)
+  * **`CMD command param1 param2`** \(_shell_ form\)
+
+  _There can only be one `CMD` instruction in a `Dockerfile`. If you list more than one `CMD` then only the last `CMD` will take effect._
+
 * **ENV**: used to define environmental variables in the container.
 * **MAINTAINER**: \(while depricated\), MAINTAINER is used to document the author of the Dockerfile \(typically an email address\)
 * **ONBUILD**: only used as a trigger when this image is used to build other images; will define commands to run "on build"
@@ -172,7 +179,7 @@ nginx               latest              9beeba249f3e        2 months ago        
 hello-world         latest              bf756fb1ae65        6 months ago         13.3kB
 ```
 
- The image we have recently built is showing up in the first line.
+ The image we have recently built is showing up in the first line. We haven't tagged out image during build process ,we will talk about tagging images later in this section.
 
 ### Pulling an image from default registry
 
