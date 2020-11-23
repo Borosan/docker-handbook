@@ -33,13 +33,30 @@ Images are made up of multiple read-only layers. Multiple containers are typical
 
 ![](.gitbook/assets/images-layers.jpg)
 
-Docker uses storage drivers to manage the content of the image layers and the writable container layer.Each storage driver handles the implementation differently, but all drivers use stackable image layers and the copy-on-write\(CoW\) strategy.
+Docker uses [storage drivers](https://app.gitbook.com/@borosan/s/docker-handbook/~/drafts/-MMo8-UiUbJcyYStxPyk/docker-storage-and-volumes#docker-storage-drivers) to manage the content of the image layers and the writable container layer.Each storage driver handles the implementation differently, but all drivers use stackable image layers and the copy-on-write\(CoW\) strategy.
 
 {% hint style="success" %}
 ### The copy-on-write \(CoW\) strategy <a id="the-copy-on-write-cow-strategy"></a>
 
 Copy-on-write is a strategy of sharing and copying files for maximum efficiency. If a file or directory exists in a lower layer within the image, and another layer \(including the writable layer\) needs read access to it, it just uses the existing file. The first time another layer needs to modify the file \(when building the image or running the container\), the file is copied into that layer and modified. This minimizes I/O and the size of each of the subsequent layers.
 {% endhint %}
+
+### The storage location of Docker images and containers <a id="the-storage-location-of-docker-images-and-containers"></a>
+
+A Docker container consists of network settings, volumes, and images. The location of Docker files depends on your operating system. Here is an overview for the most used operating systems:
+
+* Ubuntu: `/var/lib/docker/`
+* Fedora: `/var/lib/docker/`
+* Debian: `/var/lib/docker/`
+* Windows: `C:\ProgramData\DockerDesktop`
+* MacOS: `~/Library/Containers/com.docker.docker/Data/vms/0/`
+
+use `docker info | grep -i root` command to findout:
+
+```text
+[root@earth ~]# docker info | grep -i root
+Docker Root Dir: /var/lib/docker
+```
 
 ### Docker File
 
