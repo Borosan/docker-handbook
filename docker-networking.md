@@ -63,7 +63,13 @@ There are mainly 5 network drivers: Bridge, Host, None, Overlay, Macvlan:
 
 ![](.gitbook/assets/network-bridge.jpg)
 
- **Host**: This driver removes the network isolation between the docker host and the docker containers to use the host’s networking directly. So with this, you will not be able to run multiple web containers on the same host, on the same port as the port is now common to all containers in the host network.
+{% hint style="info" %}
+The Docker server creates and configures the host system’s **docker0** interface as an Ethernet bridge inside the Linux kernel that could be used by the docker containers to communicate with each other and with the outside world, the default configuration of the **docker0** works for most of the scenarios but you could customize the **docker0** bridge based on your specific requirements.
+
+The **docker0** **bridge** is virtual interface created by docker, it randomly chooses an address and subnet from the private range defined by RFC 1918 that are not in use on the host machine, and assigns it to **docker0**. All the docker containers will be connected to the **docker0** bridge by default, the docker containers connnected to the **docker0** bridge could use the iptables NAT rules created by docker to communicate with the outside world.
+{% endhint %}
+
+**Host**: This driver removes the network isolation between the docker host and the docker containers to use the host’s networking directly. So with this, you will not be able to run multiple web containers on the same host, on the same port as the port is now common to all containers in the host network.
 
 ![](.gitbook/assets/network-host.jpg)
 
@@ -405,6 +411,8 @@ with the special thanks of David Davis .
 \_\_[https://success.docker.com/article/networking](https://success.docker.com/article/networking)
 
 \_\_[https://www.edureka.co/blog/docker-networking/](https://www.edureka.co/blog/docker-networking/)
+
+[https://developer.ibm.com/recipes/tutorials/networking-your-docker-containers-using-docker0-bridge/\#:~:text=The%20docker0%20bridge%20is%20virtual,and%20assigns%20it%20to%20docker0.](https://developer.ibm.com/recipes/tutorials/networking-your-docker-containers-using-docker0-bridge/#:~:text=The%20docker0%20bridge%20is%20virtual,and%20assigns%20it%20to%20docker0.)
 
 [https://www.slideshare.net/Docker/docker-networking-0-to-60mph-slides](https://www.slideshare.net/Docker/docker-networking-0-to-60mph-slides)
 
