@@ -490,6 +490,60 @@ Loading an image using the `load` command creates a new image including its hist
 Importing a container as an image using the `import` command creates a new image excluding the history which results in a smaller image size compared to loading an image.
 {% endhint %}
 
+### Commiting changes to an image
+
+When working with Docker images and containers, one of the basic features is committing changes to a Docker image. When you commit to changes, you essentially create a new image with an additional layer that modifies the base image layer.
+
+```text
+docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
+```
+
+For example let run a container based on nginx image :
+
+```text
+[root@earth ~]# docker run -d --name my_nginxtemp nginx
+bc741086bb8bd8375ff03f14c699927e9659560ab6e653fe614f68843c6e4859
+```
+
+Now lets attach to it and modify index.html:
+
+```text
+[root@earth ~]# docker exec -i -t my_nginxtemp bash
+root@bc741086bb8b:/# cd /usr/share/nginx/html/
+root@bc741086bb8b:/usr/share/nginx/html# ls
+50x.html  index.html
+root@bc741086bb8b:/usr/share/nginx/html# cat > index.html 
+<h1>MY-NGINX</h1>
+root@bc741086bb8b:/usr/share/nginx/html# ls
+50x.html  index.html
+root@bc741086bb8b:/usr/share/nginx/html# cat index.html 
+<h1>MY-NGINX</h1>  
+```
+
+Now lets ctrl+p and then ctlr+q to exit from the container without stopping that.
+
+```text
+[root@earth ~]# docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+bc741086bb8b        nginx               "/docker-entrypoint.…"   9 minutes ago       Up 9 minutes        80/tcp              my_nginxtemp
+```
+
+and finally lets creating a new image from this running container using commit command:
+
+```text
+[root@earth ~]# docker commit my_nginxtemp my_nginx
+sha256:6e7586d227a5ad56906d8a2f14070621249a8ed7e53c4ee16275c2781ba35e96
+```
+
+and see the result:
+
+```text
+[root@earth ~]# docker image ls | grep my_nginx
+my_nginx                           latest              6e7586d227a5        3 minutes ago       133MB
+```
+
+Now we can run as many containers as we like from this image.
+
 .
 
 -----
@@ -519,6 +573,8 @@ Importing a container as an image using the `import` command creates a new image
 [https://www.giantswarm.io/blog/moving-docker-container-images-around\#:~:text=Export%20vs.&text=Docker%20supports%20two%20different%20types,container%20image%20to%20a%20file](https://www.giantswarm.io/blog/moving-docker-container-images-around#:~:text=Export%20vs.&text=Docker%20supports%20two%20different%20types,container%20image%20to%20a%20file)
 
 [https://github.com/wsargent/docker-cheat-sheet](https://github.com/wsargent/docker-cheat-sheet)
+
+[https://phoenixnap.com/kb/how-to-commit-changes-to-docker-image](https://phoenixnap.com/kb/how-to-commit-changes-to-docker-image)
 
 .
 
