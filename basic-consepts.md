@@ -66,11 +66,247 @@ However, on your development machine or a continuous integration build machine, 
 
 #### Installing Docker
 
-Navigate to the download page for[ Docker Desktop ](https://www.docker.com/products/docker-desktop)and choose your operating system from the drop-down:
+We are on Fedora28 here but you can choose distribution you like
 
-![](.gitbook/assets/container-docker-installation.jpg)
+{% tabs %}
+{% tab title="Fedora" %}
+#### OS requirements <a id="os-requirements"></a>
 
-#### 
+To install Docker Engine, you need the 64-bit version of one of these Fedora versions:
+
+* Fedora 30
+* Fedora 31
+
+#### Uninstall old versions[🔗](https://docs.docker.com/engine/install/fedora/#uninstall-old-versions) <a id="uninstall-old-versions"></a>
+
+Older versions of Docker were called `docker` or `docker-engine`. If these are installed, uninstall them, along with associated dependencies.
+
+```text
+$ sudo dnf remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-selinux \
+                  docker-engine-selinux \
+                  docker-engine
+```
+
+ _It’s OK if `dnf` reports that none of these packages are installed._
+
+### Installation methods[🔗](https://docs.docker.com/engine/install/fedora/#installation-methods) <a id="installation-methods"></a>
+
+You can install Docker Engine in different ways, depending on your needs:
+
+* Most users [set up Docker’s repositories](https://docs.docker.com/engine/install/fedora/#install-using-the-repository) and install from them, for ease of installation and upgrade tasks. This is the recommended approach.
+* Some users download the RPM package and [install it manually](https://docs.docker.com/engine/install/fedora/#install-from-a-package) and manage upgrades completely manually. This is useful in situations such as installing Docker on air-gapped systems with no access to the internet.
+* In testing and development environments, some users choose to use automated [convenience scripts](https://docs.docker.com/engine/install/fedora/#install-using-the-convenience-script) to install Docker.
+
+#### Install using the repository <a id="install-using-the-repository"></a>
+
+Before you install Docker Engine for the first time on a new host machine, you need to set up the Docker repository. Afterward, you can install and update Docker from the repository.
+
+**SET UP THE REPOSITORY**
+
+Install the `dnf-plugins-core` package \(which provides the commands to manage your DNF repositories\) and set up the **stable** repository.
+
+```text
+$ sudo dnf -y install dnf-plugins-core
+
+$ sudo dnf config-manager \
+    --add-repo \
+    https://download.docker.com/linux/fedora/docker-ce.repo
+```
+
+**INSTALL DOCKER ENGINE**
+
+Install the _latest version_ of Docker Engine and containerd, or go to the next step to install a specific version:
+
+```text
+$ sudo dnf install docker-ce docker-ce-cli containerd.io
+```
+
+If prompted to accept the GPG key, verify that the fingerprint matches `060A 61C5 1B55 8A7F 742B 77AA C52F EB6B 621E 9F35`, and if so, accept it.
+
+ _Docker is installed but not started. The `docker` group is created, but no users are added to the group._
+
+Start Docker:
+
+```text
+$ sudo systemctl start docker
+```
+
+If you would like to use Docker as a non-root user, you should now consider adding your user to the “docker” group with something like:
+
+```text
+  sudo usermod -aG docker your-user
+```
+
+_Remember to log out and back in for this to take effect!_
+{% endtab %}
+
+{% tab title="CentOS" %}
+#### OS requirements <a id="os-requirements"></a>
+
+To install Docker Engine, you need a maintained version of CentOS 7. Archived versions aren’t supported or tested.
+
+The `centos-extras` repository must be enabled. This repository is enabled by default, but if you have disabled it, you need to [re-enable it](https://wiki.centos.org/AdditionalResources/Repositories).
+
+#### Uninstall old versions[🔗](https://docs.docker.com/engine/install/centos/#uninstall-old-versions) <a id="uninstall-old-versions"></a>
+
+Older versions of Docker were called `docker` or `docker-engine`. If these are installed, uninstall them, along with associated dependencies.
+
+```text
+$ sudo yum remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-engine
+```
+
+_It’s OK if `yum` reports that none of these packages are installed._
+
+### Installation methods[🔗](https://docs.docker.com/engine/install/centos/#installation-methods) <a id="installation-methods"></a>
+
+You can install Docker Engine in different ways, depending on your needs:
+
+* Most users [set up Docker’s repositories](https://docs.docker.com/engine/install/centos/#install-using-the-repository) and install from them, for ease of installation and upgrade tasks. This is the recommended approach.
+* Some users download the RPM package and [install it manually](https://docs.docker.com/engine/install/centos/#install-from-a-package) and manage upgrades completely manually. This is useful in situations such as installing Docker on air-gapped systems with no access to the internet.
+* In testing and development environments, some users choose to use automated [convenience scripts](https://docs.docker.com/engine/install/centos/#install-using-the-convenience-script) to install Docker.
+
+#### Install using the repository <a id="install-using-the-repository"></a>
+
+Before you install Docker Engine for the first time on a new host machine, you need to set up the Docker repository. Afterward, you can install and update Docker from the repository.
+
+**SET UP THE REPOSITORY**
+
+Install the `yum-utils` package \(which provides the `yum-config-manager` utility\) and set up the **stable** repository.
+
+```text
+$ sudo yum install -y yum-utils
+
+$ sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+```
+
+**INSTALL DOCKER ENGINE**
+
+Install the _latest version_ of Docker Engine and containerd, or go to the next step to install a specific version:
+
+```text
+$ sudo yum install docker-ce docker-ce-cli containerd.io
+```
+
+If prompted to accept the GPG key, verify that the fingerprint matches `060A 61C5 1B55 8A7F 742B 77AA C52F EB6B 621E 9F35`, and if so, accept it.
+
+ _Docker is installed but not started. The `docker` group is created, but no users are added to the group._
+
+Start Docker_:_
+
+```text
+$ sudo systemctl start docker
+```
+
+If you would like to use Docker as a non-root user, you should now consider adding your user to the “docker” group with something like:
+
+```text
+  sudo usermod -aG docker your-user
+```
+
+_Remember to log out and back in for this to take effect!_
+{% endtab %}
+
+{% tab title="Ubuntu" %}
+#### OS requirements[🔗](https://docs.docker.com/engine/install/ubuntu/#os-requirements) <a id="os-requirements"></a>
+
+To install Docker Engine, you need the 64-bit version of one of these Ubuntu versions:
+
+* Ubuntu Focal 20.04 \(LTS\)
+* Ubuntu Bionic 18.04 \(LTS\)
+* Ubuntu Xenial 16.04 \(LTS\)
+
+Docker Engine is supported on `x86_64` \(or `amd64`\), `armhf`, and `arm64` architectures.
+
+#### Uninstall old versions <a id="uninstall-old-versions"></a>
+
+Older versions of Docker were called `docker`, `docker.io`, or `docker-engine`. If these are installed, uninstall them:
+
+```text
+$ sudo apt-get remove docker docker-engine docker.io containerd runc
+```
+
+_It’s OK if `apt-get` reports that none of these packages are installed._
+
+### Installation methods <a id="installation-methods"></a>
+
+You can install Docker Engine in different ways, depending on your needs:
+
+* Most users [set up Docker’s repositories](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository) and install from them, for ease of installation and upgrade tasks. This is the recommended approach.
+* Some users download the DEB package and [install it manually](https://docs.docker.com/engine/install/ubuntu/#install-from-a-package) and manage upgrades completely manually. This is useful in situations such as installing Docker on air-gapped systems with no access to the internet.
+* In testing and development environments, some users choose to use automated [convenience scripts](https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script) to install Docker.
+
+#### Install using the repository <a id="install-using-the-repository"></a>
+
+Before you install Docker Engine for the first time on a new host machine, you need to set up the Docker repository. Afterward, you can install and update Docker from the repository.
+
+**SET UP THE REPOSITORY**
+
+Update the `apt` package index and install packages to allow `apt` to use a repository over HTTPS:
+
+```text
+$ sudo apt-get update
+
+$ sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+```
+
+Add Docker’s official GPG key:
+
+```text
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+```
+
+Verify that you now have the key with the fingerprint `9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88`, by searching for the last 8 characters of the fingerprint.
+
+```text
+$ sudo apt-key fingerprint 0EBFCD88
+
+pub   rsa4096 2017-02-22 [SCEA]
+      9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88
+uid           [ unknown] Docker Release (CE deb) <docker@docker.com>
+sub   rsa4096 2017-02-22 [S]
+```
+
+**INSTALL DOCKER ENGINE**
+
+Update the `apt` package index, and install the _latest version_ of Docker Engine and containerd, or go to the next step to install a specific version:
+
+```text
+ $ sudo apt-get update
+ $ sudo apt-get install docker-ce docker-ce-cli containerd.io
+```
+
+If you would like to use Docker as a non-root user, you should now consider adding your user to the “docker” group with something like:
+
+```text
+  sudo usermod -aG docker your-user
+```
+
+_Remember to log out and back in for this to take effect!_
+{% endtab %}
+{% endtabs %}
+
+
 
 #### Hello World in Docker
 
@@ -156,6 +392,12 @@ Don't worry if it looks confusing at the moment. Everything will become much cle
 [https://cloudacademy.com/blog/docker-vs-virtual-machines-differences-you-should-know/](https://cloudacademy.com/blog/docker-vs-virtual-machines-differences-you-should-know/)
 
 [https://docs.docker.com/get-started/overview/](https://docs.docker.com/get-started/overview/)
+
+[https://docs.docker.com/engine/install/fedora/](https://docs.docker.com/engine/install/fedora/)
+
+[https://docs.docker.com/engine/install/centos/](https://docs.docker.com/engine/install/centos/)
+
+[https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/)
 
 [https://wiki.aquasec.com/display/containers/Docker+Containers+vs.+Virtual+Machines](https://wiki.aquasec.com/display/containers/Docker+Containers+vs.+Virtual+Machines)
 

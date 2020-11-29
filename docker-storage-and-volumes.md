@@ -17,13 +17,11 @@ By default all files created inside a container are stored on a writable contain
 If you’re running Docker on Linux you can also use a _tmpfs mount_. If you’re running Docker on Windows you can also use a _named pipe_.
 {% endhint %}
 
-1. Volumes : The recommended way to persist data, stored at /var/lib/docker/volumes/
-2. Bind Mounts: have limited functionality and you must use the exact file path on the host; \(volumes recommended\)
-3. tmpfs mounts: Stored only in a host's memory in Linux \(least recommended\) 
+1. **Volumes** : The recommended way to persist data, stored at /var/lib/docker/volumes/
+2. **Bind Mounts**: have limited functionality and you must use the exact file path on the host; \(volumes recommended\)
+3. **tmpfs** mounts: Stored only in a host's memory in Linux \(least recommended\) 
 
 ![](.gitbook/assets/storage-types-of-mounts.jpg)
-
-
 
 ## Docker storage drivers
 
@@ -49,6 +47,14 @@ Important: When you change the storage driver, any existing images and container
 {% endhint %}
 
 use `docker info | less` command to see which storage driver is currently running.
+
+```text
+ [root@earth~]#docker info
+...
+ Storage Driver: overlay2
+ Docker Root Dir: /var/lib/docker
+...
+```
 
 ## Use volumes
 
