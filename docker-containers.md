@@ -255,7 +255,7 @@ For situations like this, there is a command for executing other commands inside
 docker exec <container id> <command>
 ```
 
-If the id for the Redis container is If the id for the Redis container is 5531133af6a1 then the command should be as follows:then the command should be as follows:
+If the id for the Redis container is 970f1a18714a then the command should be as follows:
 
 ```text
 [root@earth ~]# docker exec -it 970f1a18714a redis-cli 
