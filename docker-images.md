@@ -93,7 +93,7 @@ RUN apt-get update && apt-get install -y nginx openssh-server
   _There can only be one `CMD` instruction in a `Dockerfile`. If you list more than one `CMD` then only the last `CMD` will take effect._
 
 * **ENV**: used to define environmental variables in the container.
-* **MAINTAINER**: \(while depricated\), MAINTAINER is used to document the author of the Dockerfile \(typically an email address\)
+* **MAINTAINER**: \(while deprecated\), MAINTAINER is used to document the author of the Dockerfile \(typically an email address\)
 * **ONBUILD**: only used as a trigger when this image is used to build other images; will define commands to run "on build"
 * **RUN**:  runs a new command in a new layer.
 * **WORKDIR**: defines the working directory of the container.
