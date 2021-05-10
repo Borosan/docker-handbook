@@ -161,13 +161,13 @@ adafef2e596e        2 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/bash"]    
 
 ### Listing images
 
-For listing local images us docker image ls with bellow syntax:
+For listing local images, use the following syntax:
 
 ```text
 docker image ls
 ```
 
-we can also use `docker images` which is deprecated some how:
+we can also use `docker images` which is deprecated somehow.
 
 ```text
 [root@earth sandbox]# docker image ls
