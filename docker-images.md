@@ -29,7 +29,7 @@ When a process **writes** a file, overlayfs will just write it to the upper dire
 
 ### Understanding Layering with Docker Images
 
-Images are made up of multiple read-only layers. Multiple containers are typically based on the same image. When an images is instantiated into container, a top writable layer is created. \(which is deleted when the container is removed\)
+Images are made up of multiple read-only layers. Multiple containers are typically based on the same image. When an image is instantiated into a container, a top writable layer is created. \(which is deleted when the container is removed\)
 
 ![](.gitbook/assets/images-layers.jpg)
 
