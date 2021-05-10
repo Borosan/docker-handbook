@@ -21,7 +21,7 @@ Overlay filesystems, also known as “union filesystems” or “union mounts”
 Basically:
 
 * the **lower** directory of the filesystem is read-only
-* the **upper** directory of the filesystem can be both read to and written from
+* the **upper** directory of the filesystem can be both readable and writable
 
 When a process **reads** a file, the overlayfs filesystem driver looks in the upper directory and reads the file from there if it’s present. Otherwise, it looks in the lower directory.
 
