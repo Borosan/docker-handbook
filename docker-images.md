@@ -21,7 +21,7 @@ Overlay filesystems, also known as “union filesystems” or “union mounts”
 Basically:
 
 * the **lower** directory of the filesystem is read-only
-* the **upper** directory of the filesystem can be both read to and written from
+* the **upper** directory of the filesystem can be both readable and writable
 
 When a process **reads** a file, the overlayfs filesystem driver looks in the upper directory and reads the file from there if it’s present. Otherwise, it looks in the lower directory.
 
@@ -29,7 +29,7 @@ When a process **writes** a file, overlayfs will just write it to the upper dire
 
 ### Understanding Layering with Docker Images
 
-Images are made up of multiple read-only layers. Multiple containers are typically based on the same image. When an images is instantiated into container, a top writable layer is created. \(which is deleted when the container is removed\)
+Images are made up of multiple read-only layers. Multiple containers are typically based on the same image. When an image is instantiated into a container, a top writable layer is created. \(which is deleted when the container is removed\)
 
 ![](.gitbook/assets/images-layers.jpg)
 
@@ -93,7 +93,7 @@ RUN apt-get update && apt-get install -y nginx openssh-server
   _There can only be one `CMD` instruction in a `Dockerfile`. If you list more than one `CMD` then only the last `CMD` will take effect._
 
 * **ENV**: used to define environmental variables in the container.
-* **MAINTAINER**: \(while depricated\), MAINTAINER is used to document the author of the Dockerfile \(typically an email address\)
+* **MAINTAINER**: \(while deprecated\), MAINTAINER is used to document the author of the Dockerfile \(typically an email address\)
 * **ONBUILD**: only used as a trigger when this image is used to build other images; will define commands to run "on build"
 * **RUN**:  runs a new command in a new layer.
 * **WORKDIR**: defines the working directory of the container.
@@ -161,13 +161,13 @@ adafef2e596e        2 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/bash"]    
 
 ### Listing images
 
-For listing local images us docker image ls with bellow syntax:
+For listing local images, use the following syntax:
 
 ```text
 docker image ls
 ```
 
-we can also use `docker images` which is deprecated some how:
+we can also use `docker images` which is deprecated somehow.
 
 ```text
 [root@earth sandbox]# docker image ls
