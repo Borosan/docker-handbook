@@ -339,6 +339,10 @@ okey lets go to the next section!
 
 .
 
+.
+
+.
+
 --------------------
 
 [https://docs.docker.com/get-started/overview/\#:~:text=These%20namespaces%20provide%20a%20layer,\(PID%3A%20Process%20ID\).](https://docs.docker.com/get-started/overview/#:~:text=These%20namespaces%20provide%20a%20layer,%28PID%3A%20Process%20ID%29.)
