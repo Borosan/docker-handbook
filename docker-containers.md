@@ -200,6 +200,8 @@ We need to use the -it option whenever we want to run a container in interactive
 We can not run any random container in interactive mode. To be eligible for running in interactive mode, the container has to be configured to start an interactive program on startup. Shells, REPLs, CLIs, and so on are examples of some interactive programs.
 {% endhint %}
 
+> To exit use ctrl+c or close the terminal and the container will be stopped.
+
 #### Append a command
 
 Sometimes we need to run a container and meanwhile append a command inside that, for example To see a list of all directories inside the Ubuntu container, you can pass the ls command as an argument:
@@ -264,7 +266,7 @@ If the id for the Redis container is 970f1a18714a then the command should be as 
 
 Notice we're using the -it option as this is going to be an interactive session. Now you can run any valid Redis command in this window and the data will be persisted in the server.
 
-You can exit simply by pressing ctrl + c key combination or closing the terminal window. Keep in mind however, the server will keep running in the background even if you exit out of the CLI program.
+> You can exit simply by pressing ctrl+p + ctrl+q  key combination or closing the terminal window. Keep in mind however, the server will keep running in the background even if you exit out of the CLI program.
 
 {% hint style="info" %}
 **Starting Shell Inside a Running Container**
