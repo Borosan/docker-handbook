@@ -128,7 +128,7 @@ Unlike virtualmachines containers are not meant to host an Operating System, con
 **"A container only lives as long as the process inside it alive"**
 {% endhint %}
 
-in our hello-world  container example, container exits as soon as   [hello.c](https://github.com/docker-library/hello-world/blob/master/hello.c) file printing out the message. 
+in our hello-world  container example, container exits as soos as   [hello.c](https://github.com/docker-library/hello-world/blob/master/hello.c) file printing out the message. 
 
 The `-a` or `--all` option indicates that we want to see not only the running containers but also the stopped ones. Executing ps without the -a option will list out the running containers only.
 
@@ -285,10 +285,6 @@ There are two commands for stopping a running container:
 * `docker stop  <container id>`  attempts to stop the container gracefully by sending a SIGTERM signal to the container. If the container doesn't stop within a grace period, a SIGKILL signal is sent. 
 * `docker kill  <container id>`  stops the container immediately by sending a SIGKILL signal. A SIGKILL signal can not be ignored by a recipient. 
 
-{% hint style="info" %}
-If you want to learn more, read this article about this topic: [https://borosan.gitbook.io/lpic1-exam-guide/1035-create-monitor-and-kill-processes](https://borosan.gitbook.io/lpic1-exam-guide/1035-create-monitor-and-kill-processes)
-{% endhint %}
-
 To stop a container with id `bb7fadc33178` execute docker stop `bb7fadc33178` command. Using `docker kill bb7fadc33178` will terminate the container immediately without giving a chance to clean up.
 
 {% hint style="info" %}
@@ -336,10 +332,6 @@ zcat NAME.gz | docker import - NAME
 ```
 
 okey lets go to the next section!
-
-.
-
-.
 
 .
 
