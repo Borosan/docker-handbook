@@ -285,6 +285,10 @@ There are two commands for stopping a running container:
 * `docker stop  <container id>`  attempts to stop the container gracefully by sending a SIGTERM signal to the container. If the container doesn't stop within a grace period, a SIGKILL signal is sent. 
 * `docker kill  <container id>`  stops the container immediately by sending a SIGKILL signal. A SIGKILL signal can not be ignored by a recipient. 
 
+{% hint style="info" %}
+If you want to learn more, read this article about this topic: [https://borosan.gitbook.io/lpic1-exam-guide/1035-create-monitor-and-kill-processes](https://borosan.gitbook.io/lpic1-exam-guide/1035-create-monitor-and-kill-processes)
+{% endhint %}
+
 To stop a container with id `bb7fadc33178` execute docker stop `bb7fadc33178` command. Using `docker kill bb7fadc33178` will terminate the container immediately without giving a chance to clean up.
 
 {% hint style="info" %}
