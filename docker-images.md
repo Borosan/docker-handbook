@@ -328,7 +328,7 @@ hello-world         latest              bf756fb1ae65        6 months ago        
 > hello-world         latest              bf756fb1ae65        6 months ago        13.3kB
 > ```
 
-    2.Explicitly tagging an image through the `tag` command:
+1. Explicitly tagging an image through the `tag` command:
 
 ```text
 docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
