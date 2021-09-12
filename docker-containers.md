@@ -128,7 +128,7 @@ Unlike virtualmachines containers are not meant to host an Operating System, con
 **"A container only lives as long as the process inside it alive"**
 {% endhint %}
 
-in our hello-world  container example, container exits as soos as   [hello.c](https://github.com/docker-library/hello-world/blob/master/hello.c) file printing out the message. 
+in our hello-world  container example, container exits as soon as   [hello.c](https://github.com/docker-library/hello-world/blob/master/hello.c) file printing out the message. 
 
 The `-a` or `--all` option indicates that we want to see not only the running containers but also the stopped ones. Executing ps without the -a option will list out the running containers only.
 
