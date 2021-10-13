@@ -25,7 +25,7 @@
 * [`docker kill`](https://docs.docker.com/engine/reference/commandline/kill) sends a SIGKILL to a running container.
 * [`docker attach`](https://docs.docker.com/engine/reference/commandline/attach) will connect to a running container.
 
-#### 
+####
 
 **CPU Constraints**
 
@@ -33,23 +33,23 @@ You can limit CPU, either using a percentage of all CPUs, or by using specific c
 
 For example, you can tell the [`cpu-shares`](https://docs.docker.com/engine/reference/run/#/cpu-share-constraint) setting. The setting is a bit strange -- 1024 means 100% of the CPU, so if you want the container to take 50% of all CPU cores, you should specify 512:
 
-```text
+```
 docker run -it -c 512 agileek/cpuset-test
 ```
 
 You can also only use some CPU cores using [`cpuset-cpus`](https://docs.docker.com/engine/reference/run/#/cpuset-constraint)`:`
 
-```text
+```
 docker run -it --cpuset-cpus=0,4,6 agileek/cpuset-test
 ```
 
-> Note that Docker can still **see** all of the CPUs inside the container -- it just isn't using all of them.
+> Note that Docker can still **see** all of the CPUs inside the container -- it just isn't using all of them. 
 
 **Memory Constraints**
 
 You can also set [memory constraints](https://docs.docker.com/engine/reference/run/#/user-memory-constraints) on Docker:
 
-```text
+```
 docker run -it -m 300M ubuntu:14.04 /bin/bash
 ```
 
@@ -57,7 +57,7 @@ docker run -it -m 300M ubuntu:14.04 /bin/bash
 
 * [`docker ps`](https://docs.docker.com/engine/reference/commandline/ps) shows running containers.
 * [`docker logs`](https://docs.docker.com/engine/reference/commandline/logs) gets logs from container.
-* [`docker inspect`](https://docs.docker.com/engine/reference/commandline/inspect) looks at all the info on a container \(including IP address\).
+* [`docker inspect`](https://docs.docker.com/engine/reference/commandline/inspect) looks at all the info on a container (including IP address).
 * [`docker events`](https://docs.docker.com/engine/reference/commandline/events) gets events from container.
 * [`docker port`](https://docs.docker.com/engine/reference/commandline/port) shows public facing port of container.
 * [`docker top`](https://docs.docker.com/engine/reference/commandline/top) shows running processes in container.
@@ -73,13 +73,13 @@ docker run -it -m 300M ubuntu:14.04 /bin/bash
 
 Import a container as an image from file:
 
-```text
+```
 cat my_container.tar.gz | docker import - my_image:my_tag
 ```
 
 Export an existing container:
 
-```text
+```
 docker export my_container | gzip > my_container.tar.gz
 ```
 
@@ -96,25 +96,25 @@ docker export my_container | gzip > my_container.tar.gz
 * [`docker build`](https://docs.docker.com/engine/reference/commandline/build) creates image from Dockerfile.
 * [`docker commit`](https://docs.docker.com/engine/reference/commandline/commit) creates image from a container, pausing it temporarily if it is running.
 * [`docker rmi`](https://docs.docker.com/engine/reference/commandline/rmi) removes an image.
-* [`docker load`](https://docs.docker.com/engine/reference/commandline/load) loads an image from a tar archive as STDIN, including images and tags \(as of 0.7\).
-* [`docker save`](https://docs.docker.com/engine/reference/commandline/save) saves an image to a tar archive stream to STDOUT with all parent layers, tags & versions \(as of 0.7\).
+* [`docker load`](https://docs.docker.com/engine/reference/commandline/load) loads an image from a tar archive as STDIN, including images and tags (as of 0.7).
+* [`docker save`](https://docs.docker.com/engine/reference/commandline/save) saves an image to a tar archive stream to STDOUT with all parent layers, tags & versions (as of 0.7).
 
 #### Info
 
 * [`docker history`](https://docs.docker.com/engine/reference/commandline/history) shows history of image.
-* [`docker tag`](https://docs.docker.com/engine/reference/commandline/tag) tags an image to a name \(local or registry\).
+* [`docker tag`](https://docs.docker.com/engine/reference/commandline/tag) tags an image to a name (local or registry).
 
 #### Load/Save image
 
 Load an image from file:
 
-```text
+```
 docker load < my_image.tar.gz
 ```
 
 Save an existing image:
 
-```text
+```
 docker save my_image:my_tag | gzip > my_image.tar.gz
 ```
 
@@ -124,13 +124,13 @@ docker save my_image:my_tag | gzip > my_image.tar.gz
 
 * [.dockerignore](https://docs.docker.com/engine/reference/builder/#dockerignore-file)
 * [FROM](https://docs.docker.com/engine/reference/builder/#from) Sets the Base Image for subsequent instructions.
-* [MAINTAINER \(deprecated - use LABEL instead\)](https://docs.docker.com/engine/reference/builder/#maintainer-deprecated) Set the Author field of the generated images.
+* [MAINTAINER (deprecated - use LABEL instead)](https://docs.docker.com/engine/reference/builder/#maintainer-deprecated) Set the Author field of the generated images.
 * [RUN](https://docs.docker.com/engine/reference/builder/#run) execute any commands in a new layer on top of the current image and commit the results.
 * [CMD](https://docs.docker.com/engine/reference/builder/#cmd) provide defaults for an executing container.
 * [EXPOSE](https://docs.docker.com/engine/reference/builder/#expose) informs Docker that the container listens on the specified network ports at runtime. NOTE: does not actually make ports accessible.
 * [ENV](https://docs.docker.com/engine/reference/builder/#env) sets environment variable.
 * [ADD](https://docs.docker.com/engine/reference/builder/#add) copies new files, directories or remote file to container. Invalidates caches. Avoid `ADD` and use `COPY` instead.
-* [COPY](https://docs.docker.com/engine/reference/builder/#copy) copies new files or directories to container. By default this copies as root regardless of the USER/WORKDIR settings. Use `--chown=<user>:<group>` to give ownership to another user/group. \(Same for `ADD`.\)
+* [COPY](https://docs.docker.com/engine/reference/builder/#copy) copies new files or directories to container. By default this copies as root regardless of the USER/WORKDIR settings. Use `--chown=<user>:<group>` to give ownership to another user/group. (Same for `ADD`.)
 * [ENTRYPOINT](https://docs.docker.com/engine/reference/builder/#entrypoint) configures a container that will run as an executable.
 * [VOLUME](https://docs.docker.com/engine/reference/builder/#volume) creates a mount point for externally mounted volumes or other containers.
 * [USER](https://docs.docker.com/engine/reference/builder/#user) sets the user name for following RUN / CMD / ENTRYPOINT commands.
@@ -166,7 +166,7 @@ docker save my_image:my_tag | gzip > my_image.tar.gz
 
 #### Lifecycle
 
-* [`docker network create`](https://docs.docker.com/engine/reference/commandline/network_create/) NAME Create a new network \(default type: bridge\).
+* [`docker network create`](https://docs.docker.com/engine/reference/commandline/network_create/) NAME Create a new network (default type: bridge).
 * [`docker network rm`](https://docs.docker.com/engine/reference/commandline/network_rm/) NAME Remove one or more networks by name or identifier. No containers can be connected to the network when deleting it.
 
 #### Info
@@ -185,9 +185,7 @@ docker save my_image:my_tag | gzip > my_image.tar.gz
 
 .
 
-------
+\------
 
-[https://github.com/wsargent/docker-cheat-sheet\#dockerfile](https://github.com/wsargent/docker-cheat-sheet#dockerfile)
-
-
+[https://github.com/wsargent/docker-cheat-sheet#dockerfile](https://github.com/wsargent/docker-cheat-sheet#dockerfile)
 

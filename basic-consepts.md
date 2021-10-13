@@ -16,7 +16,7 @@ Containers are like very lightweight virtual machines that can run directly on o
 
 ![](.gitbook/assets/container-what-is-container.jpg)
 
-Each container contains an application along with all of its dependencies and is isolated from the other ones. Developers can exchange these containers as image\(s\) through a registry and can also deploy directly on servers.
+Each container contains an application along with all of its dependencies and is isolated from the other ones. Developers can exchange these containers as image(s) through a registry and can also deploy directly on servers.
 
 ### Comparing Virtual Machines and Containers
 
@@ -30,9 +30,9 @@ Each container contains an application along with all of its dependencies and is
 
 > **There are two types of hypervisors:**
 >
-> **Type 1 Hypervisor** \(VMware vSphere, KVM, Microsoft Hyper-V\). 
+> **Type 1 Hypervisor** (VMware vSphere, KVM, Microsoft Hyper-V). 
 >
-> **Type 2 Hypervisor** \(Oracle VM VirtualBox, VMware Workstation Pro/VMware Fusion\).
+> **Type 2 Hypervisor **(Oracle VM VirtualBox, VMware Workstation Pro/VMware Fusion).
 
 **Containers:**
 
@@ -40,15 +40,15 @@ Each container contains an application along with all of its dependencies and is
 * Instead of virtualizing the entire physical machine, containers virtualize the host operating system only.
 * Containers sit on top of the physical machine and its operating system. Each container shares the host operating system kernel and, usually, the binaries and libraries, as well.
 
-| What's Diff? | VMs | Containers |
-| :--- | :--- | :--- |
-| size | Heavyweight \(GB\) | Lightweight\(MB\) |
-| BootTime | Startup time in minutes | Startup time in seconds |
-| Performance | Limited performance | Native performance |
-| OS | Each VM runs in its own OS | All containers share the host OS |
-| Runs on | Hardware-level virtualization\(Type1\) | OS virtualization |
-| Memory | Allocates required memory | Requires less memory space |
-| Isolation | Fully isolated and hence more secure | Process-level isolation, possibly less secure |
+| What's Diff? | VMs                                  | Containers                                    |
+| ------------ | ------------------------------------ | --------------------------------------------- |
+| size         | Heavyweight (GB)                     | Lightweight(MB)                               |
+| BootTime     | Startup time in minutes              | Startup time in seconds                       |
+| Performance  | Limited performance                  | Native performance                            |
+| OS           | Each VM runs in its own OS           | All containers share the host OS              |
+| Runs on      | Hardware-level virtualization(Type1) | OS virtualization                             |
+| Memory       | Allocates required memory            | Requires less memory space                    |
+| Isolation    | Fully isolated and hence more secure | Process-level isolation, possibly less secure |
 
 ### Getting Docker set up and running
 
@@ -58,11 +58,11 @@ In a production environment that runs containers hosting critical applications, 
 
 However, on your development machine or a continuous integration build machine, you can use the free Docker Engine Community or Docker Desktop depending on your machine type. In short:
 
-| Use | Product |
-| :--- | :--- |
-| Developer machine | Docker Engine Community or Docker Desktop |
-| Small server, small expectations | Docker Engine Community |
-| Serious stuff/Critical applications | Docker Engine Enterprise or Kubernetes |
+| Use                                 | Product                                   |
+| ----------------------------------- | ----------------------------------------- |
+| Developer machine                   | Docker Engine Community or Docker Desktop |
+| Small server, small expectations    | Docker Engine Community                   |
+| Serious stuff/Critical applications | Docker Engine Enterprise or Kubernetes    |
 
 #### Installing Docker
 
@@ -70,18 +70,18 @@ We are on Fedora28 here but you can choose distribution you like
 
 {% tabs %}
 {% tab title="Fedora" %}
-#### OS requirements <a id="os-requirements"></a>
+#### OS requirements <a href="os-requirements" id="os-requirements"></a>
 
 To install Docker Engine, you need the 64-bit version of one of these Fedora versions:
 
 * Fedora 30
 * Fedora 31
 
-#### Uninstall old versions[🔗](https://docs.docker.com/engine/install/fedora/#uninstall-old-versions) <a id="uninstall-old-versions"></a>
+#### Uninstall old versions[🔗](https://docs.docker.com/engine/install/fedora/#uninstall-old-versions) <a href="uninstall-old-versions" id="uninstall-old-versions"></a>
 
 Older versions of Docker were called `docker` or `docker-engine`. If these are installed, uninstall them, along with associated dependencies.
 
-```text
+```
 $ sudo dnf remove docker \
                   docker-client \
                   docker-client-latest \
@@ -96,7 +96,7 @@ $ sudo dnf remove docker \
 
  _It’s OK if `dnf` reports that none of these packages are installed._
 
-### Installation methods[🔗](https://docs.docker.com/engine/install/fedora/#installation-methods) <a id="installation-methods"></a>
+### Installation methods[🔗](https://docs.docker.com/engine/install/fedora/#installation-methods) <a href="installation-methods" id="installation-methods"></a>
 
 You can install Docker Engine in different ways, depending on your needs:
 
@@ -104,15 +104,15 @@ You can install Docker Engine in different ways, depending on your needs:
 * Some users download the RPM package and [install it manually](https://docs.docker.com/engine/install/fedora/#install-from-a-package) and manage upgrades completely manually. This is useful in situations such as installing Docker on air-gapped systems with no access to the internet.
 * In testing and development environments, some users choose to use automated [convenience scripts](https://docs.docker.com/engine/install/fedora/#install-using-the-convenience-script) to install Docker.
 
-#### Install using the repository <a id="install-using-the-repository"></a>
+#### Install using the repository <a href="install-using-the-repository" id="install-using-the-repository"></a>
 
 Before you install Docker Engine for the first time on a new host machine, you need to set up the Docker repository. Afterward, you can install and update Docker from the repository.
 
 **SET UP THE REPOSITORY**
 
-Install the `dnf-plugins-core` package \(which provides the commands to manage your DNF repositories\) and set up the **stable** repository.
+Install the `dnf-plugins-core` package (which provides the commands to manage your DNF repositories) and set up the **stable** repository.
 
-```text
+```
 $ sudo dnf -y install dnf-plugins-core
 
 $ sudo dnf config-manager \
@@ -124,7 +124,7 @@ $ sudo dnf config-manager \
 
 Install the _latest version_ of Docker Engine and containerd, or go to the next step to install a specific version:
 
-```text
+```
 $ sudo dnf install docker-ce docker-ce-cli containerd.io
 ```
 
@@ -134,13 +134,13 @@ If prompted to accept the GPG key, verify that the fingerprint matches `060A 61C
 
 Start Docker:
 
-```text
+```
 $ sudo systemctl start docker
 ```
 
 If you would like to use Docker as a non-root user, you should now consider adding your user to the “docker” group with something like:
 
-```text
+```
   sudo usermod -aG docker your-user
 ```
 
@@ -148,17 +148,17 @@ _Remember to log out and back in for this to take effect!_
 {% endtab %}
 
 {% tab title="CentOS" %}
-#### OS requirements <a id="os-requirements"></a>
+#### OS requirements <a href="os-requirements" id="os-requirements"></a>
 
 To install Docker Engine, you need a maintained version of CentOS 7. Archived versions aren’t supported or tested.
 
 The `centos-extras` repository must be enabled. This repository is enabled by default, but if you have disabled it, you need to [re-enable it](https://wiki.centos.org/AdditionalResources/Repositories).
 
-#### Uninstall old versions[🔗](https://docs.docker.com/engine/install/centos/#uninstall-old-versions) <a id="uninstall-old-versions"></a>
+#### Uninstall old versions[🔗](https://docs.docker.com/engine/install/centos/#uninstall-old-versions) <a href="uninstall-old-versions" id="uninstall-old-versions"></a>
 
 Older versions of Docker were called `docker` or `docker-engine`. If these are installed, uninstall them, along with associated dependencies.
 
-```text
+```
 $ sudo yum remove docker \
                   docker-client \
                   docker-client-latest \
@@ -171,7 +171,7 @@ $ sudo yum remove docker \
 
 _It’s OK if `yum` reports that none of these packages are installed._
 
-### Installation methods[🔗](https://docs.docker.com/engine/install/centos/#installation-methods) <a id="installation-methods"></a>
+### Installation methods[🔗](https://docs.docker.com/engine/install/centos/#installation-methods) <a href="installation-methods" id="installation-methods"></a>
 
 You can install Docker Engine in different ways, depending on your needs:
 
@@ -179,15 +179,15 @@ You can install Docker Engine in different ways, depending on your needs:
 * Some users download the RPM package and [install it manually](https://docs.docker.com/engine/install/centos/#install-from-a-package) and manage upgrades completely manually. This is useful in situations such as installing Docker on air-gapped systems with no access to the internet.
 * In testing and development environments, some users choose to use automated [convenience scripts](https://docs.docker.com/engine/install/centos/#install-using-the-convenience-script) to install Docker.
 
-#### Install using the repository <a id="install-using-the-repository"></a>
+#### Install using the repository <a href="install-using-the-repository" id="install-using-the-repository"></a>
 
 Before you install Docker Engine for the first time on a new host machine, you need to set up the Docker repository. Afterward, you can install and update Docker from the repository.
 
 **SET UP THE REPOSITORY**
 
-Install the `yum-utils` package \(which provides the `yum-config-manager` utility\) and set up the **stable** repository.
+Install the `yum-utils` package (which provides the `yum-config-manager` utility) and set up the **stable** repository.
 
-```text
+```
 $ sudo yum install -y yum-utils
 
 $ sudo yum-config-manager \
@@ -199,7 +199,7 @@ $ sudo yum-config-manager \
 
 Install the _latest version_ of Docker Engine and containerd, or go to the next step to install a specific version:
 
-```text
+```
 $ sudo yum install docker-ce docker-ce-cli containerd.io
 ```
 
@@ -209,13 +209,13 @@ If prompted to accept the GPG key, verify that the fingerprint matches `060A 61C
 
 Start Docker_:_
 
-```text
+```
 $ sudo systemctl start docker
 ```
 
 If you would like to use Docker as a non-root user, you should now consider adding your user to the “docker” group with something like:
 
-```text
+```
   sudo usermod -aG docker your-user
 ```
 
@@ -223,27 +223,27 @@ _Remember to log out and back in for this to take effect!_
 {% endtab %}
 
 {% tab title="Ubuntu" %}
-#### OS requirements[🔗](https://docs.docker.com/engine/install/ubuntu/#os-requirements) <a id="os-requirements"></a>
+#### OS requirements[🔗](https://docs.docker.com/engine/install/ubuntu/#os-requirements) <a href="os-requirements" id="os-requirements"></a>
 
 To install Docker Engine, you need the 64-bit version of one of these Ubuntu versions:
 
-* Ubuntu Focal 20.04 \(LTS\)
-* Ubuntu Bionic 18.04 \(LTS\)
-* Ubuntu Xenial 16.04 \(LTS\)
+* Ubuntu Focal 20.04 (LTS)
+* Ubuntu Bionic 18.04 (LTS)
+* Ubuntu Xenial 16.04 (LTS)
 
-Docker Engine is supported on `x86_64` \(or `amd64`\), `armhf`, and `arm64` architectures.
+Docker Engine is supported on `x86_64` (or `amd64`), `armhf`, and `arm64` architectures.
 
-#### Uninstall old versions <a id="uninstall-old-versions"></a>
+#### Uninstall old versions <a href="uninstall-old-versions" id="uninstall-old-versions"></a>
 
 Older versions of Docker were called `docker`, `docker.io`, or `docker-engine`. If these are installed, uninstall them:
 
-```text
+```
 $ sudo apt-get remove docker docker-engine docker.io containerd runc
 ```
 
 _It’s OK if `apt-get` reports that none of these packages are installed._
 
-### Installation methods <a id="installation-methods"></a>
+### Installation methods <a href="installation-methods" id="installation-methods"></a>
 
 You can install Docker Engine in different ways, depending on your needs:
 
@@ -251,7 +251,7 @@ You can install Docker Engine in different ways, depending on your needs:
 * Some users download the DEB package and [install it manually](https://docs.docker.com/engine/install/ubuntu/#install-from-a-package) and manage upgrades completely manually. This is useful in situations such as installing Docker on air-gapped systems with no access to the internet.
 * In testing and development environments, some users choose to use automated [convenience scripts](https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script) to install Docker.
 
-#### Install using the repository <a id="install-using-the-repository"></a>
+#### Install using the repository <a href="install-using-the-repository" id="install-using-the-repository"></a>
 
 Before you install Docker Engine for the first time on a new host machine, you need to set up the Docker repository. Afterward, you can install and update Docker from the repository.
 
@@ -259,7 +259,7 @@ Before you install Docker Engine for the first time on a new host machine, you n
 
 Update the `apt` package index and install packages to allow `apt` to use a repository over HTTPS:
 
-```text
+```
 $ sudo apt-get update
 
 $ sudo apt-get install \
@@ -272,13 +272,13 @@ $ sudo apt-get install \
 
 Add Docker’s official GPG key:
 
-```text
+```
 $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 ```
 
 Verify that you now have the key with the fingerprint `9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88`, by searching for the last 8 characters of the fingerprint.
 
-```text
+```
 $ sudo apt-key fingerprint 0EBFCD88
 
 pub   rsa4096 2017-02-22 [SCEA]
@@ -291,14 +291,14 @@ sub   rsa4096 2017-02-22 [S]
 
 Update the `apt` package index, and install the _latest version_ of Docker Engine and containerd, or go to the next step to install a specific version:
 
-```text
+```
  $ sudo apt-get update
  $ sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
 
 If you would like to use Docker as a non-root user, you should now consider adding your user to the “docker” group with something like:
 
-```text
+```
   sudo usermod -aG docker your-user
 ```
 
@@ -312,13 +312,13 @@ _Remember to log out and back in for this to take effect!_
 
 Now that we have Docker ready to go on our machines, it's time for us to run our first container. Open up terminal and run following command:
 
-```text
+```
 docker run hello-world
 ```
 
 If everything goes fine you should see some output like the following:
 
-```text
+```
 [root@earth ~]# docker run hello-world
 Unable to find image 'hello-world:latest' locally
 latest: Pulling from library/hello-world
@@ -356,9 +356,9 @@ To understand what just happened, you need to get familiar with the Docker Archi
 
 Docker Engine is a client-server application with these major components:
 
-* A **server** which is a type of long-running program called a daemon process \(the dockerd command\).
-* A **REST API** which specifies interfaces that programs can use to talk to the daemon and instruct it what to do.
-* A **command line interface \(CLI\)** client \(the docker command\).
+* A **server** which is a type of long-running program called a daemon process (the dockerd command).
+* A** REST API** which specifies interfaces that programs can use to talk to the daemon and instruct it what to do.
+* A **command line interface (CLI)** client (the docker command).
 
 ![](.gitbook/assets/container-docker-engine.jpg)
 
@@ -381,7 +381,7 @@ Don't worry if it looks confusing at the moment. Everything will become much cle
 
 .
 
---------
+\--------
 
 [https://www.freecodecamp.org/news/the-docker-handbook/](https://www.freecodecamp.org/news/the-docker-handbook/) by [Farhan Hasin Chowdhury](https://www.freecodecamp.org/news/author/farhanhasin/)
 
@@ -401,9 +401,7 @@ Don't worry if it looks confusing at the moment. Everything will become much cle
 
 [https://wiki.aquasec.com/display/containers/Docker+Containers+vs.+Virtual+Machines](https://wiki.aquasec.com/display/containers/Docker+Containers+vs.+Virtual+Machines)
 
-[https://docs.docker.com/get-started/overview/\#:~:text=These%20namespaces%20provide%20a%20layer,\(PID%3A%20Process%20ID\).](https://docs.docker.com/get-started/overview/#:~:text=These%20namespaces%20provide%20a%20layer,%28PID%3A%20Process%20ID%29.)
+[https://docs.docker.com/get-started/overview/#:\~:text=These%20namespaces%20provide%20a%20layer,(PID%3A%20Process%20ID).](https://docs.docker.com/get-started/overview/#:\~:text=These%20namespaces%20provide%20a%20layer,\(PID%3A%20Process%20ID\).)
 
 .
-
-
 

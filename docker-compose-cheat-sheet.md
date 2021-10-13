@@ -2,7 +2,7 @@
 
 ### Basic config example
 
-```text
+```
 # docker-compose.yml
 version: '3'
 
@@ -27,14 +27,14 @@ services:
 * [docker-compose pause](https://docs.docker.com/compose/reference/pause/) Pauses running containers of a service.
 * [docker-compose unpause](https://docs.docker.com/compose/reference/unpause/) Unpauses paused containers of a service.
 * [docker-compose ps](https://docs.docker.com/compose/reference/ps/) Lists containers.
-* [docker-compose up](https://docs.docker.com/compose/reference/up/) Builds, \(re\)creates, starts, and attaches to containers for a service.
+* [docker-compose up](https://docs.docker.com/compose/reference/up/) Builds, (re)creates, starts, and attaches to containers for a service.
 * [docker-compose down](https://docs.docker.com/compose/reference/down/) Stops containers and removes containers, networks, volumes, and images created by up.
 
 ### Config file reference
 
 #### Building
 
-```text
+```
 web:
   # build from Dockerfile
   build: .
@@ -52,7 +52,7 @@ web:
 
 #### Ports
 
-```text
+```
 ports:
   - "3000"
   - "8000:80"  # guest:host
@@ -62,7 +62,7 @@ expose: ["3000"]
 
 #### Commands
 
-```text
+```
 # command to execute
 command: bundle exec thin -p 3000
 command: [bundle, exec, thin, -p, 3000]
@@ -74,7 +74,7 @@ entrypoint: [php, -d, vendor/bin/phpunit]
 
 #### Environment variables
 
-```text
+```
 # environment vars
 environment:
   RACK_ENV: development
@@ -88,7 +88,7 @@ env_file: [.env, .development.env]
 
 #### Dependencies
 
-```text
+```
 # makes the `db` service available as the hostname `database`
 # (implies depends_on)
 links:
@@ -102,7 +102,7 @@ depends_on:
 
 #### Other options
 
-```text
+```
 # make this service extend another
 extends:
   file: common.yml  # optional
@@ -116,7 +116,7 @@ volumes:
 
 #### Labels
 
-```text
+```
 services:
   web:
     labels:
@@ -125,7 +125,7 @@ services:
 
 #### DNS servers
 
-```text
+```
 services:
   web:
     dns: 8.8.8.8
@@ -136,7 +136,7 @@ services:
 
 #### Devices
 
-```text
+```
 services:
   web:
     devices:
@@ -145,7 +145,7 @@ services:
 
 #### External links
 
-```text
+```
 services:
   web:
     external_links:
@@ -155,7 +155,7 @@ services:
 
 #### Hosts
 
-```text
+```
 services:
   web:
     extra_hosts:
@@ -164,7 +164,7 @@ services:
 
 #### Network
 
-```text
+```
 # creates a custom network called `frontend`
 networks:
   frontend:
@@ -172,7 +172,7 @@ networks:
 
 #### External network
 
-```text
+```
 # join a preexisting network
 networks:
   default:
@@ -186,11 +186,10 @@ networks:
 
 .
 
-----
+\----
 
 [https://gist.github.com/jonlabelle/bd667a97666ecda7bbc4f1cc9446d43a](https://gist.github.com/jonlabelle/bd667a97666ecda7bbc4f1cc9446d43a)
 
 [https://devhints.io/docker-compose](https://devhints.io/docker-compose)
 
 .
-

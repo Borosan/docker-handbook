@@ -14,7 +14,7 @@ When you use the `docker pull` or `docker run` commands, the required images are
 
 Now that you're familiar with the architecture, images, containers, and registries, you're ready to understand what happened when we executed the `docker run hello-world` command.
 
- The [hello-world](https://hub.docker.com/_/hello-world) image is an example of minimal containerization with Docker. It has a single [hello.c](https://github.com/docker-library/hello-world/blob/master/hello.c) file responsible for printing out the message you're seeing on your terminal. Almost every image contains a default command. In case of the hello-world image, the default command is to execute the _hello_ binary compiled from the previously mentioned C code.
+ The [hello-world](https://hub.docker.com/\_/hello-world) image is an example of minimal containerization with Docker. It has a single [hello.c](https://github.com/docker-library/hello-world/blob/master/hello.c) file responsible for printing out the message you're seeing on your terminal. Almost every image contains a default command. In case of the hello-world image, the default command is to execute the _hello_ binary compiled from the previously mentioned C code.
 
  A graphical representation of the process is as follows:
 
@@ -29,7 +29,7 @@ The entire process happens in five steps:
 
  It's the default behavior of Docker daemon to look for images in the hub, that are not present locally. But once an image has been fetched, it'll stay in the local cache. So if you execute the command again, you won't see the following lines in the output:
 
-```text
+```
 Unable to find image 'hello-world:latest' locally
 latest: Pulling from library/hello-world
 0e03bdcc26d7: Pull complete 
@@ -45,9 +45,9 @@ In the previous section, we've had an introduction about  Docker client. As we m
 
 ### Running Containers
 
-In the previous section, we've used docker run to **create** and **run** a container using the hello-world image. The generic syntax for this command is:
+In the previous section, we've used docker run to **create **and **run **a container using the hello-world image. The generic syntax for this command is:
 
-```text
+```
 docker run <image name>
 ```
 
@@ -58,7 +58,7 @@ Here `image name` can be any image from Docker Hub or our local machine. I hope 
 
 To create a container from the hello-world image execute the following command:
 
-```text
+```
 [root@earth ~]# docker create hello-world
 c41d97e867380b372f56d4801e9e83b2b528da17792c390b4825bbb2289f9bcf
 ```
@@ -66,12 +66,12 @@ c41d97e867380b372f56d4801e9e83b2b528da17792c390b4825bbb2289f9bcf
 The command should output a long string like  this is the container id. `c41d97e867380b372f56d4801e9e83b2b528da17792c390b4825bbb2289f9bcf` This id can be used to start the built container.
 
 {% hint style="info" %}
-The first 3 or 4  characters of the container id are enough for identifying the container. Instead of using the whole string, using `c41d97e867` should be fine.
+The first 3 or 4  characters of the container id are enough for identifying the container. Instead of using the whole string, using `c41d97e867 `should be fine.
 {% endhint %}
 
 To start this container execute the following command:
 
-```text
+```
 [root@earth ~]# docker start c41d97e867 
 c41d97e867 
 ```
@@ -82,9 +82,9 @@ What happened here is we didn't attach our terminal to the output stream of the 
 If you want to learn more, read this article about this topic:[https://borosan.gitbook.io/lpic1-exam-guide/1034-use-streams-pipes-and-redirects](https://borosan.gitbook.io/lpic1-exam-guide/1034-use-streams-pipes-and-redirects)
 {% endhint %}
 
-To attach your terminal to the output stream of the container you have to use the `-a` or `--attach` option:
+To attach your terminal to the output stream of the container you have to use the` -a` or `--attach` option:
 
-```text
+```
 [root@earth ~]# docker start c41d97e86 -a
 
 Hello from Docker!
@@ -113,9 +113,9 @@ For more examples and ideas, visit:
 
 ### Listing Containers
 
-To see  list of the running containers use `docker ps` command :
+To see  list of the running containers use` docker ps` command :
 
-```text
+```
 [root@earth ~]# docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
@@ -123,16 +123,16 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 you'll see that the container has run and exited successfully ! why ?
 
 {% hint style="danger" %}
-Unlike virtualmachines containers are not meant to host an Operating System, containers are meant to run specific task or process.\(such as running an application server or web server or simply doing some computing tasks\). Once the task is completed the container exits.
+Unlike virtualmachines containers are not meant to host an Operating System, containers are meant to run specific task or process.(such as running an application server or web server or simply doing some computing tasks). Once the task is completed the container exits.
 
 **"A container only lives as long as the process inside it alive"**
 {% endhint %}
 
 in our hello-world  container example, container exits as soon as   [hello.c](https://github.com/docker-library/hello-world/blob/master/hello.c) file printing out the message. 
 
-The `-a` or `--all` option indicates that we want to see not only the running containers but also the stopped ones. Executing ps without the -a option will list out the running containers only.
+The `-a` or` --all` option indicates that we want to see not only the running containers but also the stopped ones. Executing ps without the -a option will list out the running containers only.
 
-```text
+```
 [root@earth ~]# docker ps -a
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES
 c41d97e86738        hello-world         "/hello"            About an hour ago   Exited (0) 10 minutes ago                       flamboyant_allen
@@ -140,17 +140,17 @@ c41d97e86738        hello-world         "/hello"            About an hour ago   
 
 ### Restarting Containers
 
-We've already used the `start` command to run a container. There is another command for starting containers called `restart`. Though the commands seem to serve the same purpose on the surface, they have a slight difference.
+We've already used the `start `command to run a container. There is another command for starting containers called `restart`. Though the commands seem to serve the same purpose on the surface, they have a slight difference.
 
-The `start` command starts containers that are not running. The `restart` command, however, kills a running container and starts that again. If we use restart with a stopped container then it'll function just as same as the start command.
+The `start `command starts containers that are not running. The `restart `command, however, kills a running container and starts that again. If we use restart with a stopped container then it'll function just as same as the start command.
 
 ### Cleaning Up Dangling Containers
 
 Containers that have exited already, remain in the system. These dangling or unnecessary containers take up space and can even create issues at later times.
 
-There are a few ways of cleaning up containers. If we want to remove a container specifically, we can use the `rm` command. Generic syntax for this command is as follows:
+There are a few ways of cleaning up containers. If we want to remove a container specifically, we can use the `rm `command. Generic syntax for this command is as follows:
 
-```text
+```
 docker rm <container id>
 ```
 
@@ -160,16 +160,16 @@ So far we've only run containers built from the hello-world image. The default c
 
 All images are not that simple. Images can encapsulate an entire operating system inside them. Linux distributions such as Ubuntu, Fedora, Debian all have official Docker images available in the hub.
 
-We can run Ubuntu inside a container using the official ubuntu image. If we try to run an Ubuntu container by executing `docker run ubuntu` command, we'll see nothing happens. But if we execute the command with `-it` option as follows:
+We can run Ubuntu inside a container using the official ubuntu image. If we try to run an Ubuntu container by executing `docker run ubuntu` command, we'll see nothing happens. But if we execute the command with`  -it  `option as follows:
 
-```text
+```
 [root@earth ~]# docker run -it ubuntu 
 root@1f2229e0a867:/# 
 ```
 
 We should land directly on bash inside the Ubuntu container. In this bash window, we'll be able to do tasks, that we usually do in a regular Ubuntu terminal:
 
-```text
+```
 root@1f2229e0a867:/# cat /etc/os-release 
 NAME="Ubuntu"
 VERSION="20.04 LTS (Focal Fossa)"
@@ -192,7 +192,7 @@ To interact with a program that is inside a container, we have to let the contai
 The `-it` option sets the stage for us to interact with any interactive program inside a container. This option is actually two separate options mashed together.
 
 * The `-i` option connects us to the input stream of the container, so that we can send inputs to bash. 
-* The `-t` option makes sure that we get some good formatting and a native terminal like experience. 
+* The` -t` option makes sure that we get some good formatting and a native terminal like experience. 
 
 We need to use the -it option whenever we want to run a container in interactive mode.
 
@@ -206,7 +206,7 @@ We can not run any random container in interactive mode. To be eligible for runn
 
 Sometimes we need to run a container and meanwhile append a command inside that, for example To see a list of all directories inside the Ubuntu container, you can pass the ls command as an argument:
 
-```text
+```
 [root@earth ~]# docker run ubuntu ls
 bin
 boot
@@ -237,11 +237,11 @@ Notice that we're not using the -it option, because we don't want to interact wi
 
 ### Running Containers in Detached Mode
 
-To keep the container running, you have to keep your terminal window open \(which is meaningless\). 
+To keep the container running, you have to keep your terminal window open (which is meaningless). 
 
-You can run these kind of containers in detached mode. Containers running in detach mode run in the background like a service. To detach a container, we can use the `-d` or `--detach` option. To run the container in detached mode, execute the following command:
+You can run these kind of containers in detached mode. Containers running in detach mode run in the background like a service. To detach a container, we can use the` -d` or `--detach` option. To run the container in detached mode, execute the following command:
 
-```text
+```
 docker run -d redis 
 ```
 
@@ -253,13 +253,13 @@ Now that you have a Redis server running in the background, assume that you want
 
 For situations like this, there is a command for executing other commands inside a running container called exec, and the generic syntax for this command is as follows:
 
-```text
+```
 docker exec <container id> <command>
 ```
 
 If the id for the Redis container is 970f1a18714a then the command should be as follows:
 
-```text
+```
 [root@earth ~]# docker exec -it 970f1a18714a redis-cli 
 127.0.0.1:6379>
 ```
@@ -271,7 +271,7 @@ Notice we're using the -it option as this is going to be an interactive session.
 {% hint style="info" %}
 **Starting Shell Inside a Running Container**
 
-If you  want to use the shell inside a running container for some reason. You can do that by just using the `exec` command with `sh` being the executable like the following command:
+If you  want to use the shell inside a running container for some reason. You can do that by just using the `exec `command with `sh `being the executable like the following command:
 
 ```
 docker exec -it <container id> sh
@@ -291,7 +291,7 @@ There are two commands for stopping a running container:
 If you want to learn more, read this article about this topic: [https://borosan.gitbook.io/lpic1-exam-guide/1035-create-monitor-and-kill-processes](https://borosan.gitbook.io/lpic1-exam-guide/1035-create-monitor-and-kill-processes)
 {% endhint %}
 
-To stop a container with id `bb7fadc33178` execute docker stop `bb7fadc33178` command. Using `docker kill bb7fadc33178` will terminate the container immediately without giving a chance to clean up.
+To stop a container with id `bb7fadc33178 `execute docker stop `bb7fadc33178 `command. Using`  docker kill bb7fadc33178  `will terminate the container immediately without giving a chance to clean up.
 
 {% hint style="info" %}
 if you want to exit from a container without killing that  Type Ctrl + p then Ctrl + q.
@@ -299,15 +299,15 @@ if you want to exit from a container without killing that  Type Ctrl + p then Ct
 
 ### Accessing Logs From a Running Container
 
-We can also use the `logs` command to retrieve logs from a running container. The generic syntax for the command is as follows:
+We can also use the `logs `command to retrieve logs from a running container. The generic syntax for the command is as follows:
 
-```text
+```
 docker logs <container id>
 ```
 
-for example our redis container id is `970f1a18714a ,` in order to access the logs from the container:
+for example our redis container id is `970f1a18714a , `in order to access the logs from the container:
 
-```text
+```
 [root@earth ~]# docker logs 970f1a18714a
 1:C 22 Jul 2020 11:32:40.404 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
 1:C 22 Jul 2020 11:32:40.404 # Redis version=6.0.6, bits=64, commit=00000000, modified=0, pid=1, just started
@@ -327,13 +327,13 @@ This is just a portion from the log output. We can get the logs in real-time by 
 
 For ease of transport, we'll be exporting the containers into a gzipped file. The command to export the containers is:
 
-```text
+```
 docker export <ContainerName> | gzip > NAME.gz
 ```
 
 In similar fashion to the export, we're going to import the container with a single command. Obviously, before you do this, you must first move the exported file to the new server. the import can be handled with the following command:
 
-```text
+```
 zcat NAME.gz | docker import - NAME
 ```
 
@@ -341,11 +341,10 @@ okey lets go to the next section!
 
 .
 
---------------------
+\--------------------
 
-[https://docs.docker.com/get-started/overview/\#:~:text=These%20namespaces%20provide%20a%20layer,\(PID%3A%20Process%20ID\).](https://docs.docker.com/get-started/overview/#:~:text=These%20namespaces%20provide%20a%20layer,%28PID%3A%20Process%20ID%29.)
+[https://docs.docker.com/get-started/overview/#:\~:text=These%20namespaces%20provide%20a%20layer,(PID%3A%20Process%20ID).](https://docs.docker.com/get-started/overview/#:\~:text=These%20namespaces%20provide%20a%20layer,\(PID%3A%20Process%20ID\).)
 
 [https://www.freecodecamp.org/news/the-docker-handbook/](https://www.freecodecamp.org/news/the-docker-handbook/) by [Farhan Hasin Chowdhury](https://www.freecodecamp.org/news/author/farhanhasin/)
 
 .
-

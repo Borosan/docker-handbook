@@ -10,44 +10,45 @@ Here are Challenges of Networking Containers :
 
 * **Portability**
   * _How do I guarantee maximum portability across different network environments while taking advantage of unique network characteristics?_
-* **Security**
+*   **Security**
 
-  * _How do I segment to prevent the wrong containers from accessing each other?_
-  * _How do I guarantee that a container with application and cluster control traffic is secure?_
+    * _How do I segment to prevent the wrong containers from accessing each other?_
+    * _How do I guarantee that a container with application and cluster control traffic is secure?_
 
-  \*\*\*\*
+    ****
+*   **Performance**
 
-* **Performance**
+    * _How do I provide advanced network services while minimizing latency and maximizing bandwidth?_
 
-  * _How do I provide advanced network services while minimizing latency and maximizing bandwidth?_
+    ****
+*   **Scalability**
 
-  \*\*\*\*
+    * _How do I ensure that none of these characteristics are sacrificed when scaling applications across many hosts?_
 
-* **Scalability**
+    __
 
-  * _How do I ensure that none of these characteristics are sacrificed when scaling applications across many hosts?_
+### **Container Network Model (CNM)**
 
-  \_\_
-
-### **Container Network Model \(CNM\)**
-
- The Docker networking architecture is built on a set of interfaces called the _Container Networking Model_ \(CNM\). The philosophy of CNM is to provide application portability across **different** infrastructures. This model strikes a balance to achieve application portability and also takes advantage of special features and capabilities of the infrastructure.
+ The Docker networking architecture is built on a set of interfaces called the _Container Networking Model_ (CNM). The philosophy of CNM is to provide application portability across **different **infrastructures. This model strikes a balance to achieve application portability and also takes advantage of special features and capabilities of the infrastructure.
 
 ![](.gitbook/assets/network-cnm.jpg)
 
-#### CNM Constructs <a id="cnmconstructs"></a>
+#### CNM Constructs <a href="cnmconstructs" id="cnmconstructs"></a>
 
 *  **Endpoint:** Provides the connectivity for services exposed by a container in a network with other services provided by other containers in the network. An endpoint represents a service and not necessarily a particular container, Endpoint has a global scope within a cluster as well.
-* **Sandbox:** Created when users request to create an endpoint on a network. A Sandbox can have multiple endpoints attached to different networks representing container’s network configuration such as IP-address, MAC-address, routes, DNS.
+* **Sandbox: **Created when users request to create an endpoint on a network. A Sandbox can have multiple endpoints attached to different networks representing container’s network configuration such as IP-address, MAC-address, routes, DNS.
 *  **Network:**  Provides connectivity between a group of endpoints that belong to the same network and isolate from the rest. So, whenever a network is created or updated, the corresponding Driver will be notified of the event.
 
-#### CNM Driver Interfaces <a id="cnmdriverinterfaces"></a>
+#### CNM Driver Interfaces <a href="cnmdriverinterfaces" id="cnmdriverinterfaces"></a>
 
 The Container Networking Model provides two pluggable and open interfaces that can be used by users, the community, and vendors to add additional functionality, visibility, or control in the network.
 
 *  the network plugin APIs are used to create/delete networks and add/remove containers from networks.
-*   * **Native Network Drivers** — Native Network Drivers are a native part of the Docker Engine and are provided by Docker. There are multiple drivers to choose from that support different capabilities like overlay networks or local bridges.
-  * **Remote Network Drivers** — Remote Network Drivers are network drivers created by the community and other vendors. These drivers can be used to provide integration with specific software and hardware. Users can also create their own drivers in cases where they desire specific functionality that is not supported by an existing network driver.
+*
+
+    * **Native Network Drivers** — Native Network Drivers are a native part of the Docker Engine and are provided by Docker. There are multiple drivers to choose from that support different capabilities like overlay networks or local bridges.
+    * **Remote Network Drivers** — Remote Network Drivers are network drivers created by the community and other vendors. These drivers can be used to provide integration with specific software and hardware. Users can also create their own drivers in cases where they desire specific functionality that is not supported by an existing network driver.
+
 
 * The IPAM plugin APIs are used to create/delete address pools and allocate/deallocate container IP addresses.
 
@@ -64,9 +65,9 @@ There are mainly 5 network drivers: Bridge, Host, None, Overlay, Macvlan:
 ![](.gitbook/assets/network-bridge.jpg)
 
 {% hint style="info" %}
-The Docker server creates and configures the host system’s **docker0** interface as an Ethernet bridge inside the Linux kernel that could be used by the docker containers to communicate with each other and with the outside world, the default configuration of the **docker0** works for most of the scenarios but you could customize the **docker0** bridge based on your specific requirements.
+The Docker server creates and configures the host system’s **docker0 **interface as an Ethernet bridge inside the Linux kernel that could be used by the docker containers to communicate with each other and with the outside world, the default configuration of the **docker0** works for most of the scenarios but you could customize the **docker0** bridge based on your specific requirements.
 
-The **docker0** **bridge** is virtual interface created by docker, it randomly chooses an address and subnet from the private range defined by RFC 1918 that are not in use on the host machine, and assigns it to **docker0**. All the docker containers will be connected to the **docker0** bridge by default, the docker containers connnected to the **docker0** bridge could use the iptables NAT rules created by docker to communicate with the outside world.
+The **docker0** **bridge **is virtual interface created by docker, it randomly chooses an address and subnet from the private range defined by RFC 1918 that are not in use on the host machine, and assigns it to **docker0**. All the docker containers will be connected to the **docker0** bridge by default, the docker containers connnected to the **docker0 **bridge could use the iptables NAT rules created by docker to communicate with the outside world.
 {% endhint %}
 
 **Host**: This driver removes the network isolation between the docker host and the docker containers to use the host’s networking directly. So with this, you will not be able to run multiple web containers on the same host, on the same port as the port is now common to all containers in the host network.
@@ -98,12 +99,12 @@ Connects container to the LAN and other containers
 {% tab title="Host" %}
 Remove network isolation between container and host
 
-* Only one container \(or application on the host\) can use a port at the same time
+* Only one container (or application on the host) can use a port at the same time
 * Useful for specific applications, such as management container that you want to run on every host
 {% endtab %}
 
 {% tab title="Overlay" %}
-Connects multiple Docker hosts\(and their containers\) together and enable swarm
+Connects multiple Docker hosts(and their containers) together and enable swarm
 
 * Only available with Docker EE and Swarm enabled.
 * Multihost networking using VXLAN
@@ -125,7 +126,7 @@ Connects the container to an isolated network with only that container on it
 
 ### Listing Docker Networks
 
-```text
+```
 [root@earth ~]# docker network ls
 NETWORK ID          NAME                DRIVER              SCOPE
 b05ff920f0da        bridge              bridge              local
@@ -137,12 +138,12 @@ as we are using Docker-CE there is no Overlay network. We can get detailed infor
 
 ### Creating a bridge network
 
-```text
+```
 [root@earth ~]# docker network create --driver bridge myapp-net
 4c7a97493cf3b2c151966afa5a933859ba6b246862f1d05ac9030d9aaa4d70ac
 ```
 
-```text
+```
 [root@earth ~]# docker network ls
 NETWORK ID          NAME                DRIVER              SCOPE
 b05ff920f0da        bridge              bridge              local
@@ -153,9 +154,9 @@ ba9b9833188b        none                null                local
 
 so again we can user `docker network inspect myapp-net` to see details such as network subnet.
 
-### Running container\(s\) on the bridge network
+### Running container(s) on the bridge network
 
-```text
+```
 [root@earth ~]# docker run -dit --name app1 --network myapp-net alpine 
 Unable to find image 'alpine:latest' locally
 latest: Pulling from library/alpine
@@ -165,21 +166,21 @@ Status: Downloaded newer image for alpine:latest
 2ca2b7353e439a27390d363237ba166e9bb9f957748ec01455a3f17a4fc14afa
 ```
 
-```text
+```
 [root@earth ~]# docker ps | grep alpine
 2ca2b7353e43        alpine              "/bin/sh"           48 seconds ago      Up 47 seconds                           app1
 ```
 
-use `docker network inspect myapp-net` in order to check the container\(s\) that are running on the myapp-net network, see the ip address.
+use` docker network inspect myapp-net` in order to check the container(s) that are running on the myapp-net network, see the ip address.
 
 Lets bring up another container app2 on myapp-net and check the communications between two containers:
 
-```text
+```
 [root@earth ~]# docker run -dit --name app2 --network myapp-net alpine 
 c353a85a7c70ff125815f817335abb98ebffa82f595878d20074aee8ed837f74
 ```
 
-```text
+```
 [root@earth ~]# docker network inspect myapp-net
 .
 .
@@ -207,7 +208,7 @@ c353a85a7c70ff125815f817335abb98ebffa82f595878d20074aee8ed837f74
 
 attach to app1 and pinging app2 :
 
-```text
+```
 [root@earth ~]# docker attach app1
 / # hostname
 2ca2b7353e43
@@ -248,20 +249,20 @@ As there is no guarantee that containers get the same ip when system reboots, us
 
 ### Removing a docker network
 
-```text
+```
 [root@earth ~]# docker network remove myapp-net
 Error response from daemon: error while removing network: network myapp-net id 4c7a97493cf3b2c151966afa5a933859ba6b246862f1d05ac9030d9aaa4d70ac has active endpoints
 ```
 
 before removing a network we have to make sure there are no running container on that network so first:
 
-```text
+```
 [root@earth ~]# docker container  stop app1 app2
 app1
 app2
 ```
 
-```text
+```
 [root@earth ~]# docker network remove myapp-net
 myapp-net
 [root@earth ~]# docker network ls
@@ -284,14 +285,14 @@ ba9b9833188b        none                null                local
 
  By default, when you create a container, it does not publish any of its ports to the outside world. To make a port available to services outside of Docker, or to Docker containers which are not connected to the container’s network, use the `--publish` or `-p` flag. This creates a firewall rule which maps a container port to a port on the Docker host. Here are some examples:
 
-| Flag value | Description |
-| :--- | :--- |
-| `-p 8080:80` | Map TCP port 80 in the container to port 8080 on the Docker host. |
-| `-p 192.168.1.100:8080:80` | Map TCP port 80 in the container to port 8080 on the Docker host for connections to host IP 192.168.1.100. |
-| `-p 8080:80/udp` | Map UDP port 80 in the container to port 8080 on the Docker host. |
+| Flag value                      | Description                                                                                                                                     |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-p 8080:80`                    | Map TCP port 80 in the container to port 8080 on the Docker host.                                                                               |
+| `-p 192.168.1.100:8080:80`      | Map TCP port 80 in the container to port 8080 on the Docker host for connections to host IP 192.168.1.100.                                      |
+| `-p 8080:80/udp`                | Map UDP port 80 in the container to port 8080 on the Docker host.                                                                               |
 | `-p 8080:80/tcp -p 8080:80/udp` | Map TCP port 80 in the container to TCP port 8080 on the Docker host, and map UDP port 80 in the container to UDP port 8080 on the Docker host. |
 
-```text
+```
 [root@earth ~]# docker container run -dit -p 8080:80 --name web1 nginx
 0cbb21df8668e518a002282b315fa9fea64d91de4af5ed82ee4bd5eea13324e6
 
@@ -300,9 +301,9 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 0cbb21df8668        nginx               "nginx -g 'daemon of…"   7 seconds ago       Up 7 seconds        0.0.0.0:8080->80/tcp   web1
 ```
 
-If you provide the `-P` \(NOTE: the letter is upper-case\) option when running your container, it will bind each exposed port to a _random ports_ of the host.
+If you provide the `-P` (NOTE: the letter is upper-case) option when running your container, it will bind each exposed port to a _random ports_ of the host.
 
-```text
+```
 [root@earth ~]# docker container run -dit -P --name web2 nginx
 ec7f08b84e2d1c105b367caf5bee5547760ac0f1bc193383e492bb6c3871bae9
 
@@ -321,7 +322,7 @@ If we want a container to use specific DNS server we have  a couple of different
 
 1. **Using --dns flag  while run a container:**
 
-```text
+```
 [root@earth ~]# docker container run -it --dns 172.16.40.70 centos /bin/bash
 Unable to find image 'centos:latest' locally
 latest: Pulling from library/centos
@@ -334,9 +335,9 @@ nameserver 172.16.40.70
 [root@81effa9b054b /]# 
 ```
 
-    _ctrk+d to exit_  and lets check it again with out specifying DNS Server:
+_    ctrk+d to exit  _and lets check it again with out specifying DNS Server:
 
-```text
+```
 [root@earth ~]# docker container run -it  centos /bin/bash
 [root@765ea2095dca /]# 
 [root@765ea2095dca /]# cat /etc/resolv.conf 
@@ -351,13 +352,13 @@ and it has taken my Docker host DNS server settings. Please note that  Custom ho
 
 it would actually infect intire docker host:
 
-```text
+```
 [root@earth ~]# vim /etc/docker/daemon.json
 ```
 
-put the desired DNS server\(s\) in there:
+put the desired DNS server(s) in there:
 
-```text
+```
 {
 "dns": ["1.1.1.1"]
 }
@@ -365,7 +366,7 @@ put the desired DNS server\(s\) in there:
 
 restarting docker service and check the results:
 
-```text
+```
 [root@earth ~]# systemctl restart docker.service 
 [root@earth ~]#
 [root@earth ~]# docker container run -it  centos /bin/bash
@@ -377,9 +378,9 @@ nameserver 1.1.1.1
 
 ### Creating a host network
 
-The concept of host network is very simple, instead of a container running and then having some  sort of network address translation that you may or may not configure between the host and  the container\(s\) , with host network the container runs and it is utilizing the physical interface of the host network. So no NAT, no port to configure, that container is directly on host physical network.
+The concept of host network is very simple, instead of a container running and then having some  sort of network address translation that you may or may not configure between the host and  the container(s) , with host network the container runs and it is utilizing the physical interface of the host network. So no NAT, no port to configure, that container is directly on host physical network.
 
-```text
+```
 [root@earth ~]# docker container run -d --network host nginx
 50d79130ab8cd8e96758756b7920b64d4675be262cc1e2250c7b06c066fdd07f
 
@@ -390,7 +391,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 
 and actually there are not private to public port mapping, it is directly on the host network:
 
-```text
+```
 [root@earth ~]# 
 [root@earth ~]# docker container port determined_leavitt
 [root@earth ~]# 
@@ -408,19 +409,18 @@ _--------_
 
 with the special thanks of David Davis .
 
-\_\_[https://success.docker.com/article/networking](https://success.docker.com/article/networking)
+__[https://success.docker.com/article/networking](https://success.docker.com/article/networking)
 
-\_\_[https://www.edureka.co/blog/docker-networking/](https://www.edureka.co/blog/docker-networking/)
+__[https://www.edureka.co/blog/docker-networking/](https://www.edureka.co/blog/docker-networking/)
 
-[https://developer.ibm.com/recipes/tutorials/networking-your-docker-containers-using-docker0-bridge/\#:~:text=The%20docker0%20bridge%20is%20virtual,and%20assigns%20it%20to%20docker0.](https://developer.ibm.com/recipes/tutorials/networking-your-docker-containers-using-docker0-bridge/#:~:text=The%20docker0%20bridge%20is%20virtual,and%20assigns%20it%20to%20docker0.)
+[https://developer.ibm.com/recipes/tutorials/networking-your-docker-containers-using-docker0-bridge/#:\~:text=The%20docker0%20bridge%20is%20virtual,and%20assigns%20it%20to%20docker0.](https://developer.ibm.com/recipes/tutorials/networking-your-docker-containers-using-docker0-bridge/#:\~:text=The%20docker0%20bridge%20is%20virtual,and%20assigns%20it%20to%20docker0.)
 
 [https://www.slideshare.net/Docker/docker-networking-0-to-60mph-slides](https://www.slideshare.net/Docker/docker-networking-0-to-60mph-slides)
 
-\_\_[https://vsupalov.com/docker-expose-ports/](https://vsupalov.com/docker-expose-ports/)
+__[https://vsupalov.com/docker-expose-ports/](https://vsupalov.com/docker-expose-ports/)
 
 [https://docs.docker.com/config/containers/container-networking/](https://docs.docker.com/config/containers/container-networking/)
 
 _._
 
-\_\_
-
+__

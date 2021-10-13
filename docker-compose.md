@@ -4,7 +4,7 @@ We first learned how to run a docker container using the docker run command. Wha
 
 ### What is Docker compose?
 
- **Docker Compose** is used to run multiple containers as a single service. For example, lets imagine you have  an application which required NGNIX and MySQL, with docker compose you could create one configuration  file \(_in yaml format_\)  called `dockercompose.yml` which would start both the containers as a service without the need to start each one separately.
+ **Docker Compose** is used to run multiple containers as a single service. For example, lets imagine you have  an application which required NGNIX and MySQL, with docker compose you could create one configuration  file (_in yaml format_)  called` dockercompose.yml` which would start both the containers as a service without the need to start each one separately.
 
 A minimal Docker Compose application consists of three components:
 
@@ -19,19 +19,19 @@ Compose uses the Docker Engine, so you’ll need to have the Docker Engine insta
 1. Install the Docker Engine
 2. Run the following command to download Docker Compos
 
-```text
+```
 sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 ```
 
-   3. Apply permissions to the binary, like so:
+   3\. Apply permissions to the binary, like so:
 
-```text
+```
 sudo chmod +x /usr/local/bin/docker-compose
 ```
 
-4. Test the installation to check it worked properly
+4\. Test the installation to check it worked properly
 
-```text
+```
 sudo docker-compose --version
 docker-compose version 1.26.2, build eefe0d31
 ```
@@ -40,9 +40,9 @@ Now you have Docker Compose downloaded and running properly.
 
 ### Example Voting App
 
-For demostration Lets use Docker Sample Voting app which is available in github and you can simply download it from [here](https://github.com/dockersamples/example-voting-app.git) or simple run : `wget https://codeload.github.com/dockersamples/example-voting-app/zip/master`
+For demostration Lets use Docker Sample Voting app which is available in github and you can simply download it from [here](https://github.com/dockersamples/example-voting-app.git) or simple run :` wget https://codeload.github.com/dockersamples/example-voting-app/zip/master`
 
-```text
+```
 [root@earth ~]# unzip master.zip 
 [root@earth ~]# cd example-voting-app-master
 [root@earth example-voting-app-master]# ls -1
@@ -77,7 +77,7 @@ This simple application will be used to showcase how easy it is to set up an ent
 
 Before starting make sure  that all images of applications are already built are available on Docker local repository, build them using docker build command under related directory:
 
-```text
+```
 [root@earth example-voting-app-master]# cd vote/
 [root@earth vote]# docker build -t voting-app .
 .
@@ -108,7 +108,7 @@ Out of the 5 different components 2 of them redis and postgres images are alread
 >
 > docker run -d --name=vote -p 5000:80 voting-app
 >
-> docker run -d --name=db -e POSTGRES\_PASSWORD=postgres  postgres:9.4
+> docker run -d --name=db -e POSTGRES_PASSWORD=postgres  postgres:9.4
 >
 > docker run -d --name=result -p 5001:80 result-app
 >
@@ -116,14 +116,14 @@ Out of the 5 different components 2 of them redis and postgres images are alread
 
 It seems good but  it doesn't work! The problem is that we have successfully run all the different containers but we haven't actually linked them together.
 
-We haven't told the voting-app to use this particular redis instance, also we haven't told the worker and the result-app to use this particular PostgresSQL database  that we ran. That is where we use links. **Link** is a command line option which is used to link two containers togehter. 
+We haven't told the voting-app to use this particular redis instance, also we haven't told the worker and the result-app to use this particular PostgresSQL database  that we ran. That is where we use links. **Link **is a command line option which is used to link two containers togehter. 
 
 {% hint style="info" %}
 **How containers find each other?**
 
 By naming containers when running them we can help applications to communicate with each other . For example this piece of code shows how vote app looks for redis db running on a redis container.
 
-```text
+```
 [root@earth vote]# cat app.py | grep redis
 from redis import Redis
 def get_redis():
@@ -137,7 +137,7 @@ def get_redis():
 
 In our example to make vote app aware of redis service we add a link option while running the voting app container to link it ti the redis container:
 
-```text
+```
 docker run -d --name redis redis
 docker run -d --name=vote -p 5000:80 --link redis:redis voting-app
 ```
@@ -146,18 +146,18 @@ Under the hood it creates an entry into the `/etc/hosts` file on the voting app 
 
 and for the worker application we need to add two links:
 
-```text
+```
 docker run -d --name=db  -e POSTGRES_PASSWORD=postgres postgres:9.4
 docker run -d --name=worker --link db:db --link redis:redis  worker
 ```
 
 The same thing should be done for the result app to communicate with the database:
 
-```text
+```
 docker run -d --name=result -p 5001:80 --link db:db result-app
 ```
 
-```text
+```
 [root@earth ~]# docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
 f33904391a77        result-app          "docker-entrypoint.s…"   About an hour ago   Up About an hour    0.0.0.0:5001->80/tcp   result
@@ -172,12 +172,12 @@ now you can open you browser and vote and check the results:
 ![](.gitbook/assets/compose-vote-result.jpg)
 
 {% hint style="danger" %}
-**caution** : Using links this way is depricated and the support may be removed in future!
+**caution **: Using links this way is depricated and the support may be removed in future!
 {% endhint %}
 
 Once we have docker run command tested and ready it is easy to generate docker compose file from it, but before that lets stop all the previous containers we ran manually.
 
-```text
+```
 [root@earth ~]# docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
 f33904391a77        result-app          "docker-entrypoint.s…"   2 days ago          Up 2 days           0.0.0.0:5001->80/tcp   result
@@ -201,9 +201,9 @@ CONTAINER ID        IMAGE               COMMAND             CREATED             
 
 As we said Compose is a tool for defining and running multi-container Docker applications. With Compose, you use a YAML file to configure your application’s services. Then, with a single command, you create and start all the services from your configuration
 
-Here is a simple Compose file for the voting app sample \(docke-compose-simple.yml has been modified\):
+Here is a simple Compose file for the voting app sample (docke-compose-simple.yml has been modified):
 
-```text
+```
 version: "3"
 
 services:
@@ -243,7 +243,7 @@ services:
 
 and now let bring it up with `docker-compose up` command:
 
-```text
+```
 [root@earth example-voting-app-master]# docker-compose -f my-docker-compose-simple.yml up
 ```
 
@@ -251,7 +251,7 @@ and check the results!
 
 it is possible to see what container are running via `docker-compose ps` command: 
 
-```text
+```
 [root@earth example-voting-app-master]# docker-compose ps
                Name                             Command               State                      Ports                    
 --------------------------------------------------------------------------------------------------------------------------
@@ -266,7 +266,7 @@ before going to the next command lets bring down what we have started by using d
 
 ### Docker Compose Down
 
-```text
+```
 [root@earth example-voting-app-master]# docker-compose down
 Stopping example-voting-app-master_db_1     ... done
 Stopping example-voting-app-master_redis_1  ... done
@@ -288,9 +288,9 @@ WARNING: Network example-voting-app-master_back-tier not found.
 
 It is not necessary for Docker Compose to have all required images available in docker registry, as we mentioned 2 of 5 different images are already available on Docker Hub. They are official images from redis and postgres .
 
- If you like to instruct Docker compose to run Docker Build instead of building images manually we can replace the image inline with a build line and specify the location of a directory which contains the application code and a Dockerfile with instructions to build the docker image \(original docker-compose-sample.yml\):
+ If you like to instruct Docker compose to run Docker Build instead of building images manually we can replace the image inline with a build line and specify the location of a directory which contains the application code and a Dockerfile with instructions to build the docker image (original docker-compose-sample.yml):
 
-```text
+```
 version: "3"
 
 services:
@@ -327,7 +327,7 @@ services:
 
 first lets remove stopped containers and consequently we can remove images:
 
-```text
+```
 [root@earth example-voting-app-master]# docker ps -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                           PORTS               NAMES
 5742021ff9d8        result-app          "docker-entrypoint.s…"   About an hour ago   Exited (137) About an hour ago                       result
@@ -347,7 +347,7 @@ fbcbb234ae9acc395e38d195369f035e98feed9b037831f699011853c7132a8a
 Total reclaimed space: 306kB
 ```
 
-```text
+```
 [root@earth example-voting-app-master]# docker rmi example-voting-app-master_worker result-app voting-app
 Untagged: example-voting-app-master_worker:latest
 Deleted: sha256:79b676d6b36e03b13200e45049a618a08677227c8c76f683dd3f0258f2d7711f.
@@ -368,7 +368,7 @@ Deleted: sha256:ee6d47fae4b78a8f8da8d586cd3f6387f131dda5c1220e6865eac704545e013f
 
 This time when you run `docker compose up` command, it will  first  build the images give a temporary name for it and then use those images to run containers:
 
-```text
+```
 [root@earth example-voting-app-master]# docker-compose -f docker-compose-simple.yml up
 ```
 
@@ -386,7 +386,7 @@ Following is the votingapp in compose v1 format.
 
 This version had a number of limitations for example it we wanted to deploy containers on a different network other than the default bridge network there was no way! Also it was imposible to define starting order of containers
 
-```text
+```
 redis:
     image: redis
 db:
@@ -411,9 +411,9 @@ Another different is networking, in version 1 Docker Compose attaches all the co
 
 > So basically there is no need to use links in version 2.
 
-`depends` option also get  introduced  in version 2, so we can specify the starting order of containers by using that:
+`depends `option also get  introduced  in version 2, so we can specify the starting order of containers by using that:
 
-```text
+```
 version: 2
 services:
 
@@ -440,7 +440,7 @@ As of today version 3 is the latest version and its structure is similar to vers
 
 Version 3 comes with support for Docker swarm and there are some options were removed and added
 
-```text
+```
 version: 3
 services:
 
@@ -464,7 +464,7 @@ There are 2 ways to deploy an application in compose v3 format.
 
 The above option ignores the parameters under deploy section.
 
-   2. The second preferred option is to use “docker stack” approach as shown below. With this, the Docker services gets directly deployed in the Swarm mode cluster.
+   2\. The second preferred option is to use “docker stack” approach as shown below. With this, the Docker services gets directly deployed in the Swarm mode cluster.
 
 `docker stack deploy --compose-file  vote`
 {% endtab %}
@@ -476,9 +476,9 @@ Previously in  voting app example we have just deployed all containers on the de
 
 ![](.gitbook/assets/compose-vote-network.jpg)
 
-So we create front end network dedicated for user traffic and a back end network dedicated for applications. next We connect each container to the right network \(docker-compose.yml\):
+So we create front end network dedicated for user traffic and a back end network dedicated for applications. next We connect each container to the right network (docker-compose.yml):
 
-```text
+```
 version: "3"
 
 services:
@@ -540,9 +540,9 @@ networks:
   back-tier:
 ```
 
-again before using `docker-compose up` command first use `docker-compose stop` and `docker container prune` to remove previously deployed images.
+again before using `docker-compose up` command first use `docker-compose stop` and` docker container prune` to remove previously deployed images.
 
-```text
+```
 [root@earth example-voting-app-master]# docker-compose up
 Creating network "example-voting-app-master_front-tier" with the default driver
 Creating network "example-voting-app-master_back-tier" with the default driver
@@ -562,25 +562,23 @@ that's all!
 
 .
 
----
+\---
 
 With the special thanks of Mumshad Mannambeth.
 
-[https://www.tutorialspoint.com/docker/docker\_compose.htm](https://www.tutorialspoint.com/docker/docker_compose.htm)
+[https://www.tutorialspoint.com/docker/docker_compose.htm](https://www.tutorialspoint.com/docker/docker_compose.htm)
 
 [https://www.infoworld.com/article/3254689/docker-tutorial-get-started-with-docker-compose.html](https://www.infoworld.com/article/3254689/docker-tutorial-get-started-with-docker-compose.html)
 
 [https://www.educative.io/blog/docker-compose-tutorial](https://www.educative.io/blog/docker-compose-tutorial)
 
-[https://miro.medium.com/max/3116/1\*jLReq3Ng6RhqzJo4kBPnpA.png](https://miro.medium.com/max/3116/1*jLReq3Ng6RhqzJo4kBPnpA.png)
+[https://miro.medium.com/max/3116/1\*jLReq3Ng6RhqzJo4kBPnpA.png](https://miro.medium.com/max/3116/1\*jLReq3Ng6RhqzJo4kBPnpA.png)
 
 [https://docs.docker.com/compose/compose-file/compose-versioning/](https://docs.docker.com/compose/compose-file/compose-versioning/)
 
 [https://sreeninet.wordpress.com/2017/03/28/comparing-docker-compose-versions/](https://sreeninet.wordpress.com/2017/03/28/comparing-docker-compose-versions/)
 
 .
-
-
 
 
 
