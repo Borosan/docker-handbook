@@ -6,7 +6,7 @@ Docker containers runs your applications, those applications need data and that 
 
 By default all files created inside a container are stored on a writable container layer, but data should not be stored inside the container! because  there are some issues with that  :
 
-* Containers are designed to be ephemeral (disposable)
+* Containers are designed to be ephemeral \(disposable\)
 * When containers are stopped, data is not accessible.
 * Containers are typically stored on each host
 * The container file system wasn't designed for high performance I/O.
@@ -17,9 +17,9 @@ By default all files created inside a container are stored on a writable contain
 If you’re running Docker on Linux you can also use a _tmpfs mount_. If you’re running Docker on Windows you can also use a _named pipe_.
 {% endhint %}
 
-1. **Volumes **: The recommended way to persist data, stored at /var/lib/docker/volumes/
-2. **Bind Mounts**: have limited functionality and you must use the exact file path on the host; (volumes recommended)
-3. **tmpfs** mounts: Stored only in a host's memory in Linux (least recommended) 
+1. **Volumes** : The recommended way to persist data, stored at /var/lib/docker/volumes/
+2. **Bind Mounts**: have limited functionality and you must use the exact file path on the host; \(volumes recommended\)
+3. **tmpfs** mounts: Stored only in a host's memory in Linux \(least recommended\) 
 
 ![](.gitbook/assets/storage-types-of-mounts.jpg)
 
@@ -33,14 +33,14 @@ In fact, in docker we are not writing to container's writable layer, instead we 
 * btrfs
 * zfs
 
- Depending on the linux distribution we are using different storage drivers is recommended (always check docs.docker.com for latest updates):
+ Depending on the linux distribution we are using different storage drivers is recommended \(always check docs.docker.com for latest updates\):
 
-| Linux distribution  | Recommended storage drivers                                      | Alternative drivers              |
-| ------------------- | ---------------------------------------------------------------- | -------------------------------- |
-| Docker CE on ubuntu | overlay2 or aufs (for Ubuntu 14.04 running on kernel 3.13)       | overlay, devicemapper, zfs, vfs  |
-| Docker CE on Debian | overlay2 (Debian Stretch), aufs or devicemapper (older versions) | overlay, vfs                     |
-| Docker CE on CentOS | overlay2                                                         | overlay, devicemapper, zfs, vfs  |
-| Docker CE on Fedora | overlay2                                                         | overlay, devicemapper , zfs, vfs |
+| Linux distribution | Recommended storage drivers | Alternative drivers |
+| :--- | :--- | :--- |
+| Docker CE on ubuntu | overlay2 or aufs \(for Ubuntu 14.04 running on kernel 3.13\) | overlay, devicemapper, zfs, vfs |
+| Docker CE on Debian | overlay2 \(Debian Stretch\), aufs or devicemapper \(older versions\) | overlay, vfs |
+| Docker CE on CentOS | overlay2 | overlay, devicemapper, zfs, vfs |
+| Docker CE on Fedora | overlay2 | overlay, devicemapper , zfs, vfs |
 
 {% hint style="danger" %}
 Important: When you change the storage driver, any existing images and containers become inaccessible. This is because their layers cannot be used by the new storage driver. If you revert your changes, you can access the old images and containers again, but any that you pulled or created using the new driver are then inaccessible.
@@ -48,7 +48,7 @@ Important: When you change the storage driver, any existing images and container
 
 use `docker info | less` command to see which storage driver is currently running.
 
-```
+```text
  [root@earth~]#docker info
 ...
  Storage Driver: overlay2
@@ -73,30 +73,30 @@ In addition, volumes are often a better choice than persisting data in a contain
 
 ### **Create a volume**:
 
-```
+```text
 [root@earth ~]# docker volume create my-vol
 my-vol
 ```
 
 ### **List volumes**:
 
-```
+```text
 [root@earth ~]# docker volume ls
 DRIVER              VOLUME NAME
 local               8137730e7356621d3075c51b80c7838fd987b0ac34f586c035cf66eb2a9af6ed
 local               my-vol
 ```
 
-get more information about a volume by using` docker volume inspect my-vol` command.
+get more information about a volume by using `docker volume inspect my-vol` command.
 
 ### Remove a volume
 
-```
+```text
 [root@earth ~]# docker volume rm my-vol
 my-vol
 ```
 
-### Start a container with a volume <a href="start-a-container-with-a-volume" id="start-a-container-with-a-volume"></a>
+### Start a container with a volume <a id="start-a-container-with-a-volume"></a>
 
 If you start a container with a volume that does not yet exist, Docker creates the volume for you. The following example mounts the volume `myvol2` into `/app/` in the container.
 
@@ -104,7 +104,7 @@ The `-v` and `--mount` examples below produce the same result.
 
 {% tabs %}
 {% tab title="--mount" %}
-```
+```text
 $ docker run -d \
   --name devtest \
   --mount source=myvol2,target=/app \
@@ -115,7 +115,7 @@ $ docker run -d \
 {% endtab %}
 
 {% tab title="-v" %}
-```
+```text
 $ docker run -d \
   --name devtest \
   -v myvol2:/app \
@@ -127,7 +127,7 @@ $ docker run -d \
 {% endtabs %}
 
 {% hint style="info" %}
-**Choose the -v or --mount flag **
+**Choose the -v or --mount flag** 
 
 Originally, the -v or --volume flag was used for standalone containers and the --mount flag was used for swarm services. However, starting with Docker 17.06, you can also use --mount with standalone containers. In general, --mount is more explicit and verbose. The biggest difference is that the -v syntax combines all the options together in one field, while the --mount syntax separates them. [Here ](https://docs.docker.com/storage/volumes/)is a comparison of the syntax for each flag.
 
@@ -142,7 +142,7 @@ As opposed to bind mounts, all options for volumes are available for both `--mou
 
 For removing Stop the container and remove the volume. Note volume removal is a separate step.
 
-```
+```text
 $ docker container stop devtest
 
 $ docker container rm devtest
@@ -166,7 +166,7 @@ The file or directory does not need to exist on the Docker host already. It is c
 
 {% tabs %}
 {% tab title="--mount" %}
-```
+```text
 $ docker run -d \
   -it \
   --name devtest \
@@ -178,7 +178,7 @@ $ docker run -d \
 {% endtab %}
 
 {% tab title="-v" %}
-```
+```text
 $ docker run -d \
   -it \
   --name devtest \
@@ -191,15 +191,15 @@ $ docker run -d \
 {% endtabs %}
 
 {% hint style="info" %}
-### Choose the -v or --mount flag <a href="choose-the--v-or---mount-flag" id="choose-the--v-or---mount-flag"></a>
+### Choose the -v or --mount flag <a id="choose-the--v-or---mount-flag"></a>
 
 Originally, the `-v` or `--volume` flag was used for standalone containers and the `--mount` flag was used for swarm services. However, starting with Docker 17.06, you can also use `--mount` with standalone containers. In general, `--mount` is more explicit and verbose. The biggest difference is that the `-v` syntax combines all the options together in one field, while the `--mount` syntax separates them. [Here ](https://docs.docker.com/storage/bind-mounts/)is a comparison of the syntax for each flag.
 
-_ **Tip**: New users should use the `--mount` syntax. Experienced users may be more familiar with the `-v` or `--volume` syntax, but are encouraged to use `--mount`, because research has shown it to be easier to use._
+ _**Tip**: New users should use the `--mount` syntax. Experienced users may be more familiar with the `-v` or `--volume` syntax, but are encouraged to use `--mount`, because research has shown it to be easier to use._
 {% endhint %}
 
 {% hint style="danger" %}
-#### Differences between `-v` and `--mount` behavior <a href="differences-between--v-and---mount-behavior" id="differences-between--v-and---mount-behavior"></a>
+#### Differences between `-v` and `--mount` behavior <a id="differences-between--v-and---mount-behavior"></a>
 
 Because the `-v` and `--volume` flags have been a part of Docker for a long time, their behavior cannot be changed. This means that **there is one behavior that is different between `-v` and `--mount`.**
 
@@ -209,7 +209,7 @@ Because the `-v` and `--volume` flags have been a part of Docker for a long time
 
 .
 
-\------
+------
 
 with the special thanks of David Davis .
 
@@ -220,3 +220,4 @@ with the special thanks of David Davis .
 [https://docs.docker.com/storage/bind-mounts/](https://docs.docker.com/storage/bind-mounts/)
 
 .
+

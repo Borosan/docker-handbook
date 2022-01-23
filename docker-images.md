@@ -10,7 +10,7 @@ An image is an executable package that includes everything needed to run an appl
 
 ## container images are big
 
-Container images can be pretty big (though some are really small, like alpine linux is 2.5MB). Ubuntu 16.04 is about 27MB, and the Anaconda Python distribution is 800MB to 1.5GB.
+Container images can be pretty big \(though some are really small, like alpine linux is 2.5MB\). Ubuntu 16.04 is about 27MB, and the Anaconda Python distribution is 800MB to 1.5GB.
 
 Every container you start with an image starts out with the same blank slate, as if it made a copy of the image just for that container to use. But for big container images, like that 800MB Anaconda image, making a copy would be both a waste of disk space and pretty slow. So Docker doesn’t make copies – instead it uses layering technique called overlay.
 
@@ -29,19 +29,19 @@ When a process **writes** a file, overlayfs will just write it to the upper dire
 
 ## Understanding Layering with Docker Images
 
-Images are made up of multiple read-only layers. Multiple containers are typically based on the same image. When an image is instantiated into a container, a top writable layer is created. (which is deleted when the container is removed)
+Images are made up of multiple read-only layers. Multiple containers are typically based on the same image. When an image is instantiated into a container, a top writable layer is created. \(which is deleted when the container is removed\)
 
 ![](.gitbook/assets/images-layers.jpg)
 
-Docker uses [storage drivers](https://app.gitbook.com/@borosan/s/docker-handbook/\~/drafts/-MMo8-UiUbJcyYStxPyk/docker-storage-and-volumes#docker-storage-drivers) to manage the content of the image layers and the writable container layer.Each storage driver handles the implementation differently, but all drivers use stackable image layers and the copy-on-write(CoW) strategy.
+Docker uses [storage drivers](https://app.gitbook.com/@borosan/s/docker-handbook/~/drafts/-MMo8-UiUbJcyYStxPyk/docker-storage-and-volumes#docker-storage-drivers) to manage the content of the image layers and the writable container layer.Each storage driver handles the implementation differently, but all drivers use stackable image layers and the copy-on-write\(CoW\) strategy.
 
 {% hint style="success" %}
-## The copy-on-write (CoW) strategy <a href="the-copy-on-write-cow-strategy" id="the-copy-on-write-cow-strategy"></a>
+## The copy-on-write \(CoW\) strategy <a id="the-copy-on-write-cow-strategy"></a>
 
-Copy-on-write is a strategy of sharing and copying files for maximum efficiency. If a file or directory exists in a lower layer within the image, and another layer (including the writable layer) needs read access to it, it just uses the existing file. The first time another layer needs to modify the file (when building the image or running the container), the file is copied into that layer and modified. This minimizes I/O and the size of each of the subsequent layers.
+Copy-on-write is a strategy of sharing and copying files for maximum efficiency. If a file or directory exists in a lower layer within the image, and another layer \(including the writable layer\) needs read access to it, it just uses the existing file. The first time another layer needs to modify the file \(when building the image or running the container\), the file is copied into that layer and modified. This minimizes I/O and the size of each of the subsequent layers.
 {% endhint %}
 
-## The storage location of Docker images and containers <a href="the-storage-location-of-docker-images-and-containers" id="the-storage-location-of-docker-images-and-containers"></a>
+## The storage location of Docker images and containers <a id="the-storage-location-of-docker-images-and-containers"></a>
 
 A Docker container consists of network settings, volumes, and images. The location of Docker files depends on your operating system. Here is an overview for the most used operating systems:
 
@@ -53,7 +53,7 @@ A Docker container consists of network settings, volumes, and images. The locati
 
 use `docker info | grep -i root` command to findout:
 
-```
+```text
 [root@earth ~]# docker info | grep -i root
 Docker Root Dir: /var/lib/docker
 ```
@@ -66,7 +66,7 @@ You might create your own images or you might only use those created by others a
 
 Lets take a look at sample Dockerfile:
 
-```
+```text
 #Nginx
 #
 # VERSION    0.0.1
@@ -84,22 +84,23 @@ RUN apt-get update && apt-get install -y nginx openssh-server
 * **VOLUME**: creates a mount point as defined when the container is run.
 * **ENTRYPOINT**: the executable runs when the container is run.
 * **EXPOSE**: documents the ports that should be published.
-*   The **CMD** instruction has three forms:
+* The **CMD** instruction has three forms:
 
-    * **`CMD ["executable","param1","param2"]`** (_exec_ form, this is the preferred form)
-    * **`CMD ["param1","param2"]`** (as _default parameters to ENTRYPOINT_)
-    * **`CMD command param1 param2`** (_shell_ form)
+  * **`CMD ["executable","param1","param2"]`** \(_exec_ form, this is the preferred form\)
+  * **`CMD ["param1","param2"]`** \(as _default parameters to ENTRYPOINT_\)
+  * **`CMD command param1 param2`** \(_shell_ form\)
 
-    _There can only be one `CMD` instruction in a `Dockerfile`. If you list more than one `CMD` then only the last `CMD` will take effect._
+  _There can only be one `CMD` instruction in a `Dockerfile`. If you list more than one `CMD` then only the last `CMD` will take effect._
+
 * **ENV**: used to define environmental variables in the container.
-* **MAINTAINER**: (while deprecated), MAINTAINER is used to document the author of the Dockerfile (typically an email address)
+* **MAINTAINER**: \(while deprecated\), MAINTAINER is used to document the author of the Dockerfile \(typically an email address\)
 * **ONBUILD**: only used as a trigger when this image is used to build other images; will define commands to run "on build"
 * **RUN**:  runs a new command in a new layer.
 * **WORKDIR**: defines the working directory of the container.
 
 Now to build an image from this Dockerfile, we'll use the build command. The generic syntax for the command is as follows:
 
-```
+```text
 docker build <build context>
 ```
 
@@ -107,7 +108,7 @@ The build command requires a Dockerfile and the build's context. The context is 
 
 Open up a terminal window inside that directory and execute the following command:
 
-```
+```text
 [root@earth sandbox]# ls
 Dockerfile
 
@@ -120,7 +121,7 @@ Do not use your root directory, `/`, as the `PATH` as it causes the build to tra
 
 We're passing `.` as the build context which means the current directory. If you put the Dockerfile inside another directory like /src/Dockerfile, then the context will be `./src`. The build process may take some time to finish:
 
-```
+```text
 [root@earth sandbox]# docker build .
 Sending build context to Docker daemon  14.85kB
 Step 1/3 : FROM ubuntu
@@ -146,7 +147,7 @@ Successfully built fc32da11d651
 
 If everything goes fine, you should see something like `Successfully built fc32da11d651` at the end. This random string is the image id and not container id. try `docker image inspect <image id>` to get information about this image , also to see layers which our image includes try `docker image history <image id>` :
 
-```
+```text
 [root@earth sandbox]# docker image history fc32
 IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
 fc32da11d651        53 seconds ago      /bin/sh -c apt-get update && apt-get install…   159MB               
@@ -162,13 +163,13 @@ adafef2e596e        2 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/bash"]    
 
 For listing local images, use the following syntax:
 
-```
+```text
 docker image ls
 ```
 
 we can also use `docker images` which is deprecated somehow.
 
-```
+```text
 [root@earth sandbox]# docker image ls
 REPOSITORY          TAG                 IMAGE ID            CREATED              SIZE
 <none>              <none>              fc32da11d651        About a minute ago   233MB
@@ -184,11 +185,11 @@ The image we have recently built is showing up in the first line. We haven't tag
 
 To download a particular image, or set of images, use `docker pull :`
 
-```
+```text
 docker pull <image name>
 ```
 
-```
+```text
 [root@earth sandbox]# docker pull debian
 Using default tag: latest
 latest: Pulling from library/debian
@@ -203,13 +204,13 @@ As we mentioned Docker images can consist of multiple layers. In the example abo
 
 Use the `docker images` command to locate the ID of the images you want to remove. When you’ve located the images you want to delete, you can pass their ID or tag to `docker rmi`:
 
-```
+```text
 docker rmi <image1> <image2>
 ```
 
 for example lets remove debian image :
 
-```
+```text
 [root@earth sandbox]# docker rmi debian
 Untagged: debian:latest
 Untagged: debian@sha256:68f4e2259032a4e6f5035804e64438b52af8dd5889528b305b9059183ea4cd2a
@@ -218,9 +219,9 @@ Deleted: sha256:6086e1b289d997dfd19df1ec9366541c49f5545520f9dc65ebd4cd64071497b4
 ```
 
 {% hint style="danger" %}
-you can not remove an image which is used by a stop container, you can use `--force` for removing that but the stopped container(s) will be removed too!
+you can not remove an image which is used by a stop container, you can use `--force` for removing that but the stopped container\(s\) will be removed too!
 
-```
+```text
 [root@earth sandbox]# docker ps -a | grep "hello-world"
 c41d97e86738        hello-world         "/hello"                 4 days ago          Exited (0) 4 days ago                         flamboyant_allen
 
@@ -241,7 +242,7 @@ Docker images consist of multiple layers. Dangling images are layers that have n
 **Note:** If you build an image without tagging it, the image will appear on the list of dangling images because it has no association with a tagged image. You can avoid this situation by providing a tag when you build, and you can retroactively tag an images with the docker tag command.
 {% endhint %}
 
-```
+```text
 #List:
 docker images -f dangling=true
 
@@ -261,13 +262,13 @@ The two most common cases where tags come into play are:
 
 1. When building an image, we use the following command:
 
-```
+```text
 docker build -t image_name:tag_name .
 ```
 
-It tells the Docker daemon to fetch the Docker file present in the current directory (that’s what the `.` at the end does). Next, we tell the Docker daemon to build the image and give it the specified tag.
+It tells the Docker daemon to fetch the Docker file present in the current directory \(that’s what the `.` at the end does\). Next, we tell the Docker daemon to build the image and give it the specified tag.
 
-```
+```text
 [root@earth sandbox]# docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 <none>              <none>              fc32da11d651        21 minutes ago      233MB
@@ -302,7 +303,7 @@ hello-world         latest              bf756fb1ae65        6 months ago        
 
 > If you need to push your image to a registry use `docker build -t username/image_name:tag_name .` :
 >
-> ```
+> ```text
 > [root@earth sandbox]# docker build -t borosan/myapp:final .
 > Sending build context to Docker daemon  14.85kB
 > Step 1/3 : FROM ubuntu
@@ -327,15 +328,15 @@ hello-world         latest              bf756fb1ae65        6 months ago        
 > hello-world         latest              bf756fb1ae65        6 months ago        13.3kB
 > ```
 
-    2.Explicitly tagging an image through the `tag` command:
+1. Explicitly tagging an image through the `tag` command:
 
-```
+```text
 docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
 ```
 
-It just creates an alias (a reference) by the name of the `TARGET_IMAGE` that refers to the `SOURCE_IMAGE.` That’s all it does. It’s like assigning an existing image another name to refer to it. Notice how the tag is specified as optional here as well, by the `[:TAG]` :
+It just creates an alias \(a reference\) by the name of the `TARGET_IMAGE` that refers to the `SOURCE_IMAGE.` That’s all it does. It’s like assigning an existing image another name to refer to it. Notice how the tag is specified as optional here as well, by the `[:TAG]` :
 
-```
+```text
 [root@earth sandbox]# docker tag  myapp:final myapp:original
 [root@earth sandbox]# docker image ls
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
@@ -349,20 +350,20 @@ hello-world         latest              bf756fb1ae65        6 months ago        
 ```
 
 {% hint style="info" %}
-### What happens when you don’t specify a tag? <a href="what-happens-when-you-don-t-specify-a-tag" id="what-happens-when-you-don-t-specify-a-tag"></a>
+### What happens when you don’t specify a tag? <a id="what-happens-when-you-don-t-specify-a-tag"></a>
 
 Alright, now let’s uncover what happens when you don’t specify a tag while tagging an image. This is where the `latest` tag comes into the picture. Whenever an image is tagged without an explicit tag, it’s given the `latest` tag by default. It’s an unfortunate naming choice that causes a lot of confusion. But I like to think of it as the **default tag** that’s given to images when you don’t specify one.
 {% endhint %}
 
 ## storing images in Docker Registry
 
-A docker registery is a stateless, highly scalable application that stores and lets you distribute Docker images. Registries could be local (private) or cloud-base (private or public).
+A docker registery is a stateless, highly scalable application that stores and lets you distribute Docker images. Registries could be local \(private\) or cloud-base \(private or public\).
 
 Examples of Docker Registries:
 
-1. Docker Registry (local open-source registry)
-2. Docker Trusted Registry(DTR) \[Available in Docker Enterprise Edition]
-3. Docker Hub \[Default Registry]
+1. Docker Registry \(local open-source registry\)
+2. Docker Trusted Registry\(DTR\) \[Available in Docker Enterprise Edition\]
+3. Docker Hub \[Default Registry\]
 
 The first thing to remember is any time you are going to use a registry you need to first log in to that registry:
 
@@ -370,7 +371,7 @@ The first thing to remember is any time you are going to use a registry you need
 You need to create an account in Docker Hub first.
 {% endhint %}
 
-```
+```text
 [root@earth sandbox]# docker login
 Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
 Username: borosan
@@ -386,7 +387,7 @@ If we had a docker local registry then it would be `docker login localhost:5000`
 
 and when you finish your job , logout:
 
-```
+```text
 [root@earth sandbox]# docker logout
 Removing login credentials for https://index.docker.io/v1/
 [root@earth sandbox]#
@@ -396,11 +397,11 @@ Removing login credentials for https://index.docker.io/v1/
 
 Use docker push to Push an image or a repository to a registry
 
-```
+```text
 docker push [OPTIONS] NAME[:TAG]
 ```
 
-```
+```text
 [root@earth sandbox]# docker image ls
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 borosan/myapp       final               fc32da11d651        2 hours ago         233MB
@@ -434,17 +435,17 @@ final: digest: sha256:c8fcece97935d8babb195f4ab3c9be38a091e259c5e750b84151a48351
 
 Whether you are using a public or a private registry you can search that registry to find the image that you need. And that is what `docker search` command does for us:
 
-```
+```text
 docker search [OPTIONS] TERM
 ```
 
 docker search has a very useful filtering option, you can filter output based on these conditions:
 
-* **- stars=\<numberOfStar>**
-* **- is-automated=(true|false)**
-* **- is-official=(true|false)**
+* **- stars=&lt;numberOfStar&gt;**
+* **- is-automated=\(true\|false\)**
+* **- is-official=\(true\|false\)**
 
-```
+```text
 [root@earth sandbox]# docker search --filter "stars=90" --filter "is-official=true" ubuntu
 NAME                DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
 ubuntu              Ubuntu is a Debian-based Linux operating sys…   11152               [OK]                
@@ -465,7 +466,7 @@ Solutions to these problems can be to save the Docker container locally as a a t
 
 To save a Docker image after you have pulled, committed or built it you use the `docker save` command. For example, lets save a local copy of the `myapp` docker image we made:
 
-```
+```text
 [root@earth sandbox]# docker save myapp
 myapp           myapp:final     myapp:original  
 [root@earth sandbox]# docker save myapp:original > myapp-original.tar
@@ -482,7 +483,7 @@ Docker supports two different types of methods for saving container images to a 
 
 If we want to load that Docker container from the archived tar file in the future, we can use the docker load command:
 
-```
+```text
 [root@earth sandbox]# docker load  --input myapp-original.tar 
 Loaded image: myapp:original
 ```
@@ -490,7 +491,7 @@ Loaded image: myapp:original
 {% hint style="info" %}
 ### Difference between loading a saved image and importing an exported container as an image
 
-Loading an image using the `load` command creates a new image including its history.\
+Loading an image using the `load` command creates a new image including its history.  
 Importing a container as an image using the `import` command creates a new image excluding the history which results in a smaller image size compared to loading an image.
 {% endhint %}
 
@@ -498,20 +499,20 @@ Importing a container as an image using the `import` command creates a new image
 
 When working with Docker images and containers, one of the basic features is committing changes to a Docker image. When you commit to changes, you essentially create a new image with an additional layer that modifies the base image layer.
 
-```
+```text
 docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
 ```
 
 For example let run a container based on nginx image :
 
-```
+```text
 [root@earth ~]# docker run -d --name my_nginxtemp nginx
 bc741086bb8bd8375ff03f14c699927e9659560ab6e653fe614f68843c6e4859
 ```
 
 Now lets attach to it and modify index.html:
 
-```
+```text
 [root@earth ~]# docker exec -i -t my_nginxtemp bash
 root@bc741086bb8b:/# cd /usr/share/nginx/html/
 root@bc741086bb8b:/usr/share/nginx/html# ls
@@ -526,7 +527,7 @@ root@bc741086bb8b:/usr/share/nginx/html# cat index.html
 
 Now lets ctrl+p and then ctlr+q to exit from the container without stopping that.
 
-```
+```text
 [root@earth ~]# docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
 bc741086bb8b        nginx               "/docker-entrypoint.…"   9 minutes ago       Up 9 minutes        80/tcp              my_nginxtemp
@@ -534,14 +535,14 @@ bc741086bb8b        nginx               "/docker-entrypoint.…"   9 minutes ago
 
 and finally lets creating a new image from this running container using commit command:
 
-```
+```text
 [root@earth ~]# docker commit my_nginxtemp my_nginx
 sha256:6e7586d227a5ad56906d8a2f14070621249a8ed7e53c4ee16275c2781ba35e96
 ```
 
 and see the result:
 
-```
+```text
 [root@earth ~]# docker image ls | grep my_nginx
 my_nginx                           latest              6e7586d227a5        3 minutes ago       133MB
 ```
@@ -550,7 +551,7 @@ Now we can run as many containers as we like from this image.
 
 .
 
-[https://docs.docker.com/](https://docs.docker.com)
+[https://docs.docker.com/](https://docs.docker.com/)
 
 [https://blog.octo.com/wp-content/uploads/2014/01/docker-stages.png](https://blog.octo.com/wp-content/uploads/2014/01/docker-stages.png)
 
@@ -558,11 +559,11 @@ Now we can run as many containers as we like from this image.
 
 [https://docs.docker.com/engine/images/architecture.svg](https://docs.docker.com/engine/images/architecture.svg)
 
-[https://www.freecodecamp.org/news/the-docker-handbook/#creating-custom-images](https://www.freecodecamp.org/news/the-docker-handbook/#creating-custom-images)
+[https://www.freecodecamp.org/news/the-docker-handbook/\#creating-custom-images](https://www.freecodecamp.org/news/the-docker-handbook/#creating-custom-images)
 
 [https://docs.docker.com/storage/storagedriver/](https://docs.docker.com/storage/storagedriver/)
 
-[https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes#:\~:text=Remove%20all%20images,docker%20images%20%2Da](https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes#:\~:text=Remove%20all%20images,docker%20images%20%2Da)
+[https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes\#:~:text=Remove%20all%20images,docker%20images%20%2Da](https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes#:~:text=Remove%20all%20images,docker%20images%20%2Da)
 
 [https://www.freecodecamp.org/news/an-introduction-to-docker-tags-9b5395636c2a/](https://www.freecodecamp.org/news/an-introduction-to-docker-tags-9b5395636c2a/)
 
@@ -572,10 +573,11 @@ Now we can run as many containers as we like from this image.
 
 [https://tecadmin.net/export-and-import-docker-containers/](https://tecadmin.net/export-and-import-docker-containers/)
 
-[https://www.giantswarm.io/blog/moving-docker-container-images-around#:\~:text=Export%20vs.\&text=Docker%20supports%20two%20different%20types,container%20image%20to%20a%20file](https://www.giantswarm.io/blog/moving-docker-container-images-around#:\~:text=Export%20vs.\&text=Docker%20supports%20two%20different%20types,container%20image%20to%20a%20file)
+[https://www.giantswarm.io/blog/moving-docker-container-images-around\#:~:text=Export%20vs.&text=Docker%20supports%20two%20different%20types,container%20image%20to%20a%20file](https://www.giantswarm.io/blog/moving-docker-container-images-around#:~:text=Export%20vs.&text=Docker%20supports%20two%20different%20types,container%20image%20to%20a%20file)
 
 [https://github.com/wsargent/docker-cheat-sheet](https://github.com/wsargent/docker-cheat-sheet)
 
 [https://phoenixnap.com/kb/how-to-commit-changes-to-docker-image](https://phoenixnap.com/kb/how-to-commit-changes-to-docker-image)
 
 .
+
