@@ -578,6 +578,8 @@ With the special thanks of Mumshad Mannambeth.
 
 [https://sreeninet.wordpress.com/2017/03/28/comparing-docker-compose-versions/](https://sreeninet.wordpress.com/2017/03/28/comparing-docker-compose-versions/)
 
+[https://spacelift.io/blog/docker-compose](https://spacelift.io/blog/docker-compose)
+
 .
 
 
